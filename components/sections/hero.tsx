@@ -98,7 +98,7 @@ export default function Hero() {
           className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 leading-tight"
           variants={itemVariants}
         >
-          <span className="inline-block">
+          <span className="inline-block mt-44 sm:mt-20 md:mt-16 lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
             {t('hero.title')}
           </span>
           <div className="inline-flex items-center ml-4">

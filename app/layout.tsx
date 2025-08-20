@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navbar from "@/components/navbar";
 import { Toaster } from "sonner";
+import AppLoader from "@/components/app-loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,6 +64,7 @@ export default function RootLayout({
         <meta name="google" content="notranslate" />
       </head>
       <body className={inter.className}>
+        <AppLoader />
         <LanguageProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
