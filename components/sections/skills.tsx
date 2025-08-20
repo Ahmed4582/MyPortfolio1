@@ -124,17 +124,10 @@ export default function Skills() {
     },
   };
 
-  const tabVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: { duration: 0.3 }
-    }
-  };
+  // Simplified animations for better mobile performance
 
   return (
-    <section ref={ref} id="skills" className={`py-20 relative overflow-hidden bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 ${dir === 'rtl' ? 'font-arabic' : ''}`}>
+    <section ref={ref} id="skills" className={`py-20 relative overflow-visible bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 ${dir === 'rtl' ? 'font-arabic' : ''}`}>
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(59,130,246,0.08),transparent_50%)] dark:bg-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(6,182,212,0.08),transparent_50%)] dark:bg-transparent" />
@@ -167,29 +160,15 @@ export default function Skills() {
           {["frontend", "backend", "database"].map((tab) => (
             <motion.button
               key={tab}
-              variants={tabVariants}
-              animate={activeTab === tab ? {
-                scale: [1, 1.05, 1],
-                boxShadow: [
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
-                ]
-              } : {}}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => {
                 setActiveTab(tab as any);
                 setCurrentPage(1);
               }}
               className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-xl font-semibold transition-all duration-300 ${
                 activeTab === (tab as any)
-                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg animate-pulse"
                   : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-gray-200 dark:border-gray-700"
               }`}
             >
@@ -212,22 +191,8 @@ export default function Skills() {
             <motion.div
               key={skill.name}
               variants={itemVariants}
-              animate={{
-                scale: [1, 1.02, 1],
-                y: [0, -2, 0]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              whileHover={{
-                scale: 1.05,
-                y: -8,
-                rotateY: 5,
-                transition: { duration: 0.3 }
-              }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.99 }}
               className="group"
             >
               <div className="border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 h-full">
@@ -272,17 +237,8 @@ export default function Skills() {
             variants={itemVariants}
           >
             <motion.button
-              animate={{
-                scale: [1, 1.05, 1],
-                x: [0, -1, 0]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              whileHover={{ scale: 1.1, x: -2 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
@@ -293,17 +249,8 @@ export default function Skills() {
               {t('projects.page')} {currentPage} {t('projects.of')} {totalPages}
             </span>
             <motion.button
-              animate={{
-                scale: [1, 1.05, 1],
-                x: [0, 1, 0]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              whileHover={{ scale: 1.1, x: 2 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
