@@ -55,18 +55,18 @@ export default function Hero() {
   ];
 
   return (
-    <section ref={ref} className={`h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 ${dir === 'rtl' ? 'font-arabic' : ''}`}>
+    <section ref={ref} className={`min-h-[120svh] flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 ${dir === 'rtl' ? 'font-arabic' : ''}`}>
       {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden mt-20">
+      <div className="absolute inset-0 overflow-hidden py-20">
         <motion.div
-          className="absolute top-20 left-10 text-blue-200 dark:text-blue-600/20"
+          className="hidden md:block absolute top-20 left-10 text-blue-200 dark:text-blue-600/20"
           variants={floatingVariants}
           animate="float"
         >
           <Code className="h-32 w-32" />
         </motion.div>
         <motion.div
-          className="absolute bottom-20 right-10 text-purple-200 dark:text-purple-600/20"
+          className="hidden md:block absolute bottom-20 right-10 text-purple-200 dark:text-purple-600/20"
           variants={floatingVariants}
           animate="float"
           style={{ animationDelay: "1s" }}
@@ -74,7 +74,7 @@ export default function Hero() {
           <Palette className="h-24 w-24" />
         </motion.div>
         <motion.div
-          className="absolute top-1/2 right-1/4 text-pink-200 dark:text-pink-600/20"
+          className="hidden md:block absolute top-1/2 right-1/4 text-pink-200 dark:text-pink-600/20"
           variants={floatingVariants}
           animate="float"
           style={{ animationDelay: "2s" }}
@@ -89,7 +89,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_40%,rgba(120,219,255,0.1),transparent_50%)] dark:bg-transparent" />
 
       <motion.div
-        className="text-center space-y-8 px-4 relative z-10"
+        className="text-center space-y-6 md:space-y-8 px-4 relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -98,23 +98,23 @@ export default function Hero() {
           className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 leading-tight"
           variants={itemVariants}
         >
-          <span className="inline-block mt-44 sm:mt-20 md:mt-16 lg:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
+          <span className="inline-block mt-4 sm:mt-6 md:mt-0 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
             {t('hero.title')}
           </span>
           <div className="inline-flex items-center ml-4">
-            <Rocket className="h-16 w-16 text-blue-600 dark:text-blue-400 animate-bounce" />
+            <Rocket className="h-10 w-10 sm:h-16 sm:w-16 text-blue-600 dark:text-blue-400 animate-bounce" />
           </div>
         </motion.div>
         
         <motion.p
-          className="text-xl md:text-3xl text-gray-800 dark:text-gray-200 font-medium"
+          className="text-lg sm:text-xl md:text-3xl text-gray-800 dark:text-gray-200 font-medium"
           variants={itemVariants}
         >
           {t('hero.subtitle')}
         </motion.p>
         
         <motion.div
-          className="max-w-3xl mx-auto text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed"
+          className="max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed"
           variants={itemVariants}
         >
           <span className="inline-block">
@@ -127,7 +127,7 @@ export default function Hero() {
 
         {/* Technology Badges */}
         <motion.div
-          className="flex justify-center gap-3 flex-wrap"
+          className="flex justify-center gap-2 sm:gap-3 flex-wrap"
           variants={itemVariants}
         >
           {technologies.map((tech, index) => (
@@ -146,13 +146,13 @@ export default function Hero() {
 
         {/* Resume & Certificate Buttons */}
         <motion.div
-          className="flex justify-center gap-6 pt-8 flex-wrap"
+          className="flex justify-center gap-4 sm:gap-6 pt-6 sm:pt-8 flex-wrap flex-col sm:flex-row"
           variants={itemVariants}
         >
           <Button
             asChild
             size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
           >
             <a
               href="https://drive.google.com/file/d/1DKYwTrQjWVrlsDtbWZACdjWtTUb3AydU/view?usp=sharing"
@@ -170,7 +170,7 @@ export default function Hero() {
             asChild
             size="lg"
             variant="outline"
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
           >
             <a
               href="https://drive.google.com/file/d/1931YDKN_P2DnYWIpK72GDfrvZLZgx0ud/view?usp=drive_link"
@@ -185,7 +185,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ delay: 2, duration: 0.8 }}
