@@ -66,7 +66,7 @@ const experiences = [
 export default function Experience() {
   const { t, language, dir } = useLanguage();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   const containerVariants = {
     hidden: { opacity: 0 },

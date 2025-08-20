@@ -17,7 +17,7 @@ export default function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'dashboard' | 'ecommerce' | 'portfolio' | 'landing' | 'webapp' | 'mobile'>('all');
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   // Get projects data
   const projects = createProjectsData(language);

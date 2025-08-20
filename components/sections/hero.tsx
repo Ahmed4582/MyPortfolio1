@@ -57,7 +57,7 @@ export default function Hero() {
   return (
     <section ref={ref} className={`h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 ${dir === 'rtl' ? 'font-arabic' : ''}`}>
       {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden mt-20">
         <motion.div
           className="absolute top-20 left-10 text-blue-200 dark:text-blue-600/20"
           variants={floatingVariants}

@@ -147,13 +147,13 @@ export default function Skills() {
       >
         {/* Section Header */}
         <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-cyan-700 to-purple-700 dark:from-blue-400 dark:via-cyan-400 dark:to-purple-400"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-cyan-700 to-purple-700 dark:from-blue-400 dark:via-cyan-400 dark:to-purple-400"
           variants={itemVariants}
         >
           {t("skills.title")}
         </motion.h2>
         <motion.p
-          className="text-xl text-center text-gray-700 dark:text-gray-300 mb-16"
+          className="text-base sm:text-lg md:text-xl text-center text-gray-700 dark:text-gray-300 mb-8 sm:mb-16"
           variants={itemVariants}
         >
           {t("skills.subtitle")}
@@ -161,38 +161,38 @@ export default function Skills() {
 
         {/* Tabs */}
         <motion.div
-          className="flex justify-center space-x-4 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12"
           variants={containerVariants}
         >
-          {(["frontend", "backend", "database"] as const).map((tab) => (
-                         <motion.button
-               key={tab}
-               variants={tabVariants}
-               animate={activeTab === tab ? {
-                 scale: [1, 1.05, 1],
-                 boxShadow: [
-                   "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                   "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
-                   "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
-                 ]
-               } : {}}
-               transition={{
-                 duration: 2,
-                 repeat: Infinity,
-                 ease: "easeInOut"
-               }}
-               whileHover={{ scale: 1.05, y: -2 }}
-               whileTap={{ scale: 0.95 }}
-               onClick={() => {
-                 setActiveTab(tab);
-                 setCurrentPage(1);
-               }}
-               className={`px-8 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                 activeTab === tab
-                   ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
-                   : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-gray-200 dark:border-gray-700"
-               }`}
-             >
+          {["frontend", "backend", "database"].map((tab) => (
+            <motion.button
+              key={tab}
+              variants={tabVariants}
+              animate={activeTab === tab ? {
+                scale: [1, 1.05, 1],
+                boxShadow: [
+                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
+                  "0 10px 15px -3px rgba(0, 0, 0, 0.1)"
+                ]
+              } : {}}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setActiveTab(tab as any);
+                setCurrentPage(1);
+              }}
+              className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-xl font-semibold transition-all duration-300 ${
+                activeTab === (tab as any)
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+                  : "bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 border border-gray-200 dark:border-gray-700"
+              }`}
+            >
               <span className="flex items-center gap-2">
                 {tab === 'frontend' && <Palette className="w-5 h-5" />}
                 {tab === 'backend' && <Server className="w-5 h-5" />}
@@ -205,41 +205,41 @@ export default function Skills() {
 
         {/* Skills Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-10 sm:mb-12"
           variants={containerVariants}
         >
           {paginatedSkills.map((skill, index) => (
-                         <motion.div
-               key={skill.name}
-               variants={itemVariants}
-               animate={{ 
-                 scale: [1, 1.02, 1],
-                 y: [0, -2, 0]
-               }}
-               transition={{
-                 duration: 3,
-                 repeat: Infinity,
-                 ease: "easeInOut"
-               }}
-               whileHover={{ 
-                 scale: 1.05, 
-                 y: -8, 
-                 rotateY: 5,
-                 transition: { duration: 0.3 }
-               }}
-               whileTap={{ scale: 0.98 }}
-               className="group"
-             >
-              <div className="border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 h-full">
+            <motion.div
+              key={skill.name}
+              variants={itemVariants}
+              animate={{
+                scale: [1, 1.02, 1],
+                y: [0, -2, 0]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{
+                scale: 1.05,
+                y: -8,
+                rotateY: 5,
+                transition: { duration: 0.3 }
+              }}
+              whileTap={{ scale: 0.98 }}
+              className="group"
+            >
+              <div className="border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-all duration-300 hover:shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 h-full">
                 {/* Skill Header */}
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 p-2 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 p-2 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 group-hover:scale-110 transition-transform duration-300">
                     <div className="w-full h-full text-purple-600 dark:text-purple-400">
                       {skill.icon}
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {skill.name}
                     </h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -250,10 +250,10 @@ export default function Skills() {
 
                 {/* Level Badge */}
                 <div className="flex justify-between items-center">
-                  <div className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r text-white border-0"
-                       style={{
-                         background: `linear-gradient(to right, ${getLevelColor(skill.level)})`
-                       }}>
+                  <div className="inline-block px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r text-white border-0"
+                    style={{
+                      background: `linear-gradient(to right, ${getLevelColor(skill.level)})`
+                    }}>
                     {getLevelLabel(skill.level)}
                   </div>
                   <span className="text-gray-400 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">
@@ -268,48 +268,48 @@ export default function Skills() {
         {/* Pagination */}
         {totalPages > 1 && (
           <motion.div
-            className="flex justify-center items-center space-x-4"
+            className="flex justify-center items-center gap-2 sm:gap-4"
             variants={itemVariants}
           >
-                         <motion.button
-               animate={{
-                 scale: [1, 1.05, 1],
-                 x: [0, -1, 0]
-               }}
-               transition={{
-                 duration: 2,
-                 repeat: Infinity,
-                 ease: "easeInOut"
-               }}
-               whileHover={{ scale: 1.1, x: -2 }}
-               whileTap={{ scale: 0.9 }}
-               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-               disabled={currentPage === 1}
-               className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-             >
-               <ChevronLeft className="h-5 w-5" />
-             </motion.button>
-            <span className="text-sm text-gray-600 dark:text-gray-300 px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg border border-gray-200 dark:border-gray-700">
+            <motion.button
+              animate={{
+                scale: [1, 1.05, 1],
+                x: [0, -1, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{ scale: 1.1, x: -2 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </motion.button>
+            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg border border-gray-200 dark:border-gray-700">
               {t('projects.page')} {currentPage} {t('projects.of')} {totalPages}
             </span>
-                         <motion.button
-               animate={{
-                 scale: [1, 1.05, 1],
-                 x: [0, 1, 0]
-               }}
-               transition={{
-                 duration: 2,
-                 repeat: Infinity,
-                 ease: "easeInOut"
-               }}
-               whileHover={{ scale: 1.1, x: 2 }}
-               whileTap={{ scale: 0.9 }}
-               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-               disabled={currentPage === totalPages}
-               className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-             >
-               <ChevronRight className="h-5 w-5" />
-             </motion.button>
+            <motion.button
+              animate={{
+                scale: [1, 1.05, 1],
+                x: [0, 1, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{ scale: 1.1, x: 2 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="p-2 rounded-lg bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </motion.button>
           </motion.div>
         )}
 

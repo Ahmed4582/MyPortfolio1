@@ -39,7 +39,7 @@ export function Pagination({
 
 
       {/* Navigation Controls */}
-      <div className="flex items-center space-x-3 md:space-x-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <Button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
@@ -53,7 +53,7 @@ export function Pagination({
           </span>
         </Button>
         
-        <Badge variant="secondary" className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 border-purple-200 dark:border-purple-700">
+        <Badge variant="secondary" className="px-3 md:px-6 py-1.5 md:py-3 text-xs sm:text-sm md:text-base bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 border-purple-200 dark:border-purple-700 whitespace-nowrap">
           {language === 'ar' ? `${t('projects.page')} ${currentPage} ${t('projects.of')} ${totalPages}` : `${t('projects.page')} ${currentPage} ${t('projects.of')} ${totalPages}`}
         </Badge>
         

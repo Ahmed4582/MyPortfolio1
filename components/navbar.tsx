@@ -100,14 +100,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Left Side - Logo & Controls */}
           <div className="flex items-center justify-between space-x-6">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              <span className="animate-pulse text-2xl text-black dark:text-white">Ahmed Naser</span>
-            </Link>
+    
             
             {/* Controls */}
             <div className="flex items-center space-x-2">
