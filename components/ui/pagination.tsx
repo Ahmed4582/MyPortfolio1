@@ -36,75 +36,7 @@ export function Pagination({
       className="flex flex-col items-center space-y-6 mt-16"
       variants={itemVariants}
     >
-      {/* Page Numbers - Responsive */}
-      <div className="flex items-center space-x-1 md:space-x-2">
-        {/* Show first page */}
-        {currentPage > 3 && (
-          <>
-            <Button
-              onClick={() => onPageChange(1)}
-              variant="outline"
-              size="sm"
-              className="w-8 h-8 md:w-10 md:h-10 p-0 text-xs md:text-sm transition-all duration-300 transform hover:scale-105 hover:bg-purple-50 dark:hover:bg-purple-900/20 border-purple-300 dark:border-purple-600"
-            >
-              1
-            </Button>
-            {currentPage > 4 && (
-              <span className="text-gray-400 text-xs md:text-sm">...</span>
-            )}
-          </>
-        )}
 
-        {/* Show pages around current page */}
-        {Array.from({ length: totalPages }, (_, i) => i + 1)
-          .filter(pageNum => 
-            pageNum === 1 || 
-            pageNum === totalPages || 
-            (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
-          )
-          .map((pageNum, index, array) => {
-            // Add ellipsis if there's a gap
-            const prevPage = array[index - 1];
-            const showEllipsis = prevPage && pageNum - prevPage > 1;
-            
-            return (
-              <div key={pageNum} className="flex items-center">
-                {showEllipsis && (
-                  <span className="text-gray-400 text-xs md:text-sm mx-1">...</span>
-                )}
-                <Button
-                  onClick={() => onPageChange(pageNum)}
-                  variant={currentPage === pageNum ? "default" : "outline"}
-                  size="sm"
-                  className={`w-8 h-8 md:w-10 md:h-10 p-0 text-xs md:text-sm transition-all duration-300 transform hover:scale-105 ${
-                    currentPage === pageNum
-                      ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
-                      : "hover:bg-purple-50 dark:hover:bg-purple-900/20 border-purple-300 dark:border-purple-600"
-                  }`}
-                >
-                  {pageNum}
-                </Button>
-              </div>
-            );
-          })}
-
-        {/* Show last page */}
-        {currentPage < totalPages - 2 && (
-          <>
-            {currentPage < totalPages - 3 && (
-              <span className="text-gray-400 text-xs md:text-sm">...</span>
-            )}
-            <Button
-              onClick={() => onPageChange(totalPages)}
-              variant="outline"
-              size="sm"
-              className="w-8 h-8 md:w-10 md:h-10 p-0 text-xs md:text-sm transition-all duration-300 transform hover:scale-105 hover:bg-purple-50 dark:hover:bg-purple-900/20 border-purple-300 dark:border-purple-600"
-            >
-              {totalPages}
-            </Button>
-          </>
-        )}
-      </div>
 
       {/* Navigation Controls */}
       <div className="flex items-center space-x-3 md:space-x-4">

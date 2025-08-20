@@ -15,6 +15,17 @@ export const metadata: Metadata = {
   keywords:
     "front-end developer, react developer, nextjs developer, web developer, javascript developer, typescript developer",
   authors: [{ name: "Ahmed Nasser" }],
+  metadataBase: new URL("https://your-domain.com"),
+  alternates: { canonical: "https://your-domain.com" },
+  robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: "/assets/portfolio.jpg", sizes: "16x16", type: "image/png" },
+      { url: "/assets/portfolio.jpg", sizes: "32x32", type: "image/png" }
+    ],
+    apple: [{ url: "/assets/portfolio.jpg", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/assets/portfolio.jpg"],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -25,7 +36,7 @@ export const metadata: Metadata = {
       "Experienced Front-End Developer specializing in React, Next.js, and modern web technologies.",
     images: [
       {
-        url: "https://your-domain.com/og-image.jpg",
+        url: "https://your-domain.com/portfolio.jpg",
         width: 1200,
         height: 630,
         alt: "Ahmed Nasser - Front-End Developer",
@@ -37,7 +48,7 @@ export const metadata: Metadata = {
     title: "Ahmed Nasser | Front-End Developer",
     description:
       "Experienced Front-End Developer specializing in React, Next.js, and modern web technologies.",
-    images: ["https://your-domain.com/og-image.jpg"],
+    images: ["https://your-domain.com/portfolio.jpg"],
   },
 };
 
@@ -49,8 +60,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://your-domain.com" />
-        <meta name="robots" content="index, follow" />
         <meta name="google" content="notranslate" />
       </head>
       <body className={inter.className}>
