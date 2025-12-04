@@ -15,7 +15,7 @@ const socialLinks = [
     displayName: "Let's Connect",
     subText: "on LinkedIn",
     icon: Linkedin,
-    url: "https://www.linkedin.com/in/ekizr/",
+    url: "https://www.linkedin.com/in/ahmed-naser-924253392/",
     color: "#0A66C2",
     gradient: "from-[#0A66C2] to-[#0077B5]",
     isPrimary: true,
@@ -23,34 +23,34 @@ const socialLinks = [
   {
     name: "Instagram",
     displayName: "Instagram",
-    subText: "@ekizr_",
+    subText: "@xahmed_naserx_",
     icon: Instagram,
-    url: "https://www.instagram.com/ekizr_/?hl=id",
+    url: "https://www.instagram.com/xahmed_naserx_/",
     color: "#E4405F",
     gradient: "from-[#833AB4] via-[#E4405F] to-[#FCAF45]",
   },
   {
     name: "YouTube",
     displayName: "Youtube",
-    subText: "@eki zulfar",
+    subText: "@AhmedNaser-ed1pr",
     icon: Youtube,
-    url: "https://www.youtube.com/@eki_zulfar",
+    url: "https://www.youtube.com/@AhmedNaser-ed1pr",
     color: "#FF0000",
     gradient: "from-[#FF0000] to-[#CC0000]",
   },
   {
     name: "GitHub",
     displayName: "Github",
-    subText: "@EkiZR",
+    subText: "@Ahmed4582",
     icon: Github,
-    url: "https://github.com/EkiZR",
+    url: "https://github.com/Ahmed4582",
     color: "#ffffff",
     gradient: "from-[#333] to-[#24292e]",
   },
   {
     name: "TikTok",
     displayName: "Tiktok",
-    subText: "@eki_zulfar",
+    subText: "@ahmed_naser_code",
     icon: ({ className, ...props }) => (
       <svg
         width="24px"
@@ -59,6 +59,8 @@ const socialLinks = [
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
+        className={className}
+        {...props}
       >
         <title>Tiktok</title>
         <g
@@ -88,7 +90,7 @@ const socialLinks = [
         </g>
       </svg>
     ),
-    url: "https://tiktok.com/@eki_zulfar",
+    url: "https://www.tiktok.com/@ahmed_naser_code?_r=1&_t=ZS-91vduPuC4Qi",
     color: "black",
     gradient: "from-[#000000] via-[#25F4EE] to-[#FE2C55]",
   },

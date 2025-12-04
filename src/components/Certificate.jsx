@@ -1,5 +1,6 @@
-import React, { useState } from "react"
-import { Modal, IconButton, Box, Fade, Backdrop, Zoom, Typography } from "@mui/material"
+import { useState } from "react"
+import PropTypes from 'prop-types'
+import { Modal, IconButton, Box, Backdrop, Typography } from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
 import FullscreenIcon from "@mui/icons-material/Fullscreen"
 
@@ -196,6 +197,10 @@ const Certificate = ({ ImgSertif }) => {
 			</Modal>
 		</Box>
 	)
+}
+
+Certificate.propTypes = {
+	ImgSertif: PropTypes.string.isRequired,
 }
 
 export default Certificate

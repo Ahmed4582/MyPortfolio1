@@ -1,12 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
 const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
-  // Handle kasus ketika ProjectLink kosong
+  // Handle case when ProjectLink is empty
   const handleLiveDemo = (e) => {
     if (!ProjectLink) {
-      console.log("ProjectLink kosong");
+      console.log("ProjectLink is empty");
       e.preventDefault();
       alert("Live demo link is not available");
     }
@@ -14,7 +14,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
   
   const handleDetails = (e) => {
     if (!id) {
-      console.log("ID kosong");
+      console.log("ID is empty");
       e.preventDefault();
       alert("Project details are not available");
     }
@@ -85,6 +85,14 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
       </div>
     </div>
   );
+};
+
+CardProject.propTypes = {
+  Img: PropTypes.string.isRequired,
+  Title: PropTypes.string.isRequired,
+  Description: PropTypes.string.isRequired,
+  Link: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CardProject;
