@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, memo } from "react"
 import PropTypes from 'prop-types'
-import { Github, Linkedin, Mail, ExternalLink, Instagram, Sparkles } from "lucide-react"
+import {  Linkedin, Mail, ExternalLink,  Sparkles  } from "lucide-react"
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { Facebook, Telegram, WhatsApp } from "@mui/icons-material"
 
 // Memoized Components
 const StatusBadge = memo(() => (
@@ -98,9 +99,10 @@ const PAUSE_DURATION = 2000;
 const WORDS = ["Computer Science & Math Student", "Tech Enthusiast"];
 const TECH_STACK = ["React", "Javascript", "Next.js", "Typescript" ];
 const SOCIAL_LINKS = [
-  { icon: Github, link: "https://github.com/Ahmed4582" },
+  { icon: Telegram, link: "https://t.me/Ahmedx_N" },
   { icon: Linkedin, link: "https://www.linkedin.com/in/ahmed-naser-924253392/" },
-  { icon: Instagram, link: "https://www.instagram.com/xahmed_naserx_/?hl=id" }
+  { icon: Facebook, link: "https://www.facebook.com/ahmed.naser.635015/" },
+  {icon: WhatsApp , link: "https://wa.me/+20114239918"}
 ];
 
 const Home = () => {
@@ -197,7 +199,7 @@ const Home = () => {
                 <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
                   data-aos="fade-up"
                   data-aos-delay="1000">
-                  Menciptakan Website Yang Inovatif, Fungsional, dan User-Friendly untuk Solusi Digital.
+                  Creating Innovative, Functional, and User-Friendly Websites for Digital Solutions.
                 </p>
 
                 {/* Tech Stack */}
