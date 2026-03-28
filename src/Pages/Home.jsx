@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, memo } from "react"
 import PropTypes from 'prop-types'
 import {  Linkedin, Mail, ExternalLink,  Sparkles  } from "lucide-react"
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { Facebook, Telegram, WhatsApp } from "@mui/icons-material"
@@ -236,15 +235,14 @@ const Home = () => {
                   <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-[scanline_3s_ease-in-out_infinite]" />
                 </div>
 
-                {/* Robot Lottie */}
+                {/* Robot Image */}
                 <div className="relative z-10 w-full h-full flex items-center justify-center"
                   onMouseEnter={() => setIsHovering(true)}
                   onMouseLeave={() => setIsHovering(false)}>
-                  <DotLottieReact
-                    src="https://lottie.host/4db68bbd-ee77-4cfa-8453-a3b39c05e6aa/lAzAlIqTW8.lottie"
-                    loop
-                    autoplay
-                    className={`w-[75%] h-[75%] transition-transform duration-500 ${isHovering ? "scale-110" : "scale-100"}`}
+                  <img
+                    src="/Service-robots-1.jpg"
+                    alt="AI Robot"
+                    className={`w-[80%] h-[80%] object-contain transition-transform duration-500 drop-shadow-[0_0_24px_rgba(139,92,246,0.5)] ${isHovering ? "scale-110" : "scale-100"}`}
                   />
                 </div>
 
