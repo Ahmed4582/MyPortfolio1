@@ -161,19 +161,6 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, [handleTyping, isTyping]);
 
-  // Lottie configuration
-  const lottieOptions = {
-    src: "https://lottie.host/58753882-bb6a-49f5-a2c0-950eda1e135a/NLbpVqGegK.lottie",
-    loop: true,
-    autoplay: true,
-    style: { width: "100%", height: "100%" },
-    className: `w-full h-full transition-all duration-500 ${
-      isHovering 
-        ? "scale-[180%] sm:scale-[160%] md:scale-[150%] lg:scale-[145%] rotate-2" 
-        : "scale-[175%] sm:scale-[155%] md:scale-[145%] lg:scale-[140%]"
-    }`
-  };
-
   return (
     <div className="min-h-screen bg-[#030014] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] " id="Home">
       <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
@@ -224,31 +211,62 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Column - Optimized Lottie Animation */}
-            <div className="w-full py-[10%] sm:py-0 lg:w-1/2 h-auto lg:h-[600px] xl:h-[750px] relative flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0"
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
+            {/* Right Column — Creative AI Robot */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0 py-[10%] sm:py-0"
               data-aos="fade-left"
               data-aos-delay="600">
-              <div className="relative w-full opacity-90">
-                <div className={`absolute inset-0 bg-gradient-to-r from-[#6366f1]/10 to-[#a855f7]/10 rounded-3xl blur-3xl transition-all duration-700 ease-in-out ${
-                  isHovering ? "opacity-50 scale-105" : "opacity-20 scale-100"
-                }`}>
+              <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
+
+                {/* Circuit-board dot grid */}
+                <div className="absolute inset-0 rounded-3xl opacity-20"
+                  style={{ backgroundImage: 'radial-gradient(circle, #6366f1 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+
+                {/* Neon border rings */}
+                <div className="absolute inset-0 rounded-3xl border border-purple-500/30 animate-pulse" />
+                <div className="absolute -inset-[2px] rounded-3xl border border-indigo-500/20 animate-[pulse_3s_ease-in-out_infinite]" />
+
+                {/* Rotating orbit ring */}
+                <div className="absolute inset-[-18px] rounded-full border border-dashed border-purple-500/25 animate-[spin_14s_linear_infinite]" />
+
+                {/* Glow blob behind robot */}
+                <div className="absolute inset-8 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-[pulse_4s_ease-in-out_infinite]" />
+
+                {/* Scan line sweep */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+                  <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-[scanline_3s_ease-in-out_infinite]" />
                 </div>
 
-                <div className={`relative lg:left-12 z-10 w-full opacity-90 transform transition-transform duration-500 ${
-                  isHovering ? "scale-105" : "scale-100"
-                }`}>
-                  <DotLottieReact {...lottieOptions} />
+                {/* Robot Lottie */}
+                <div className="relative z-10 w-full h-full flex items-center justify-center"
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}>
+                  <DotLottieReact
+                    src="https://lottie.host/4db68bbd-ee77-4cfa-8453-a3b39c05e6aa/lAzAlIqTW8.lottie"
+                    loop
+                    autoplay
+                    className={`w-[75%] h-[75%] transition-transform duration-500 ${isHovering ? "scale-110" : "scale-100"}`}
+                  />
                 </div>
 
-                <div className={`absolute inset-0 pointer-events-none transition-all duration-700 ${
-                  isHovering ? "opacity-50" : "opacity-20"
-                }`}>
-                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-br from-indigo-500/10 to-purple-500/10 blur-3xl animate-[pulse_6s_cubic-bezier(0.4,0,0.6,1)_infinite] transition-all duration-700 ${
-                    isHovering ? "scale-110" : "scale-100"
-                  }`}>
-                  </div>
+                {/* Floating tech badges */}
+                <div className="absolute top-3 -left-4 px-3 py-1 rounded-full bg-black/70 border border-purple-500/40 text-purple-300 text-xs font-mono backdrop-blur-sm animate-[float_3s_ease-in-out_infinite]">
+                  ⚛ React
+                </div>
+                <div className="absolute top-3 -right-4 px-3 py-1 rounded-full bg-black/70 border border-indigo-400/40 text-indigo-300 text-xs font-mono backdrop-blur-sm animate-[float_3.5s_ease-in-out_0.5s_infinite]">
+                  🤖 AI
+                </div>
+                <div className="absolute bottom-14 -left-4 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-gray-300 text-xs font-mono backdrop-blur-sm animate-[float_4s_ease-in-out_1s_infinite]">
+                  ▲ Next.js
+                </div>
+                <div className="absolute bottom-14 -right-4 px-3 py-1 rounded-full bg-black/70 border border-yellow-500/30 text-yellow-300 text-xs font-mono backdrop-blur-sm animate-[float_3.2s_ease-in-out_0.8s_infinite]">
+                  JS ⚡
+                </div>
+
+                {/* AI coding label */}
+                <div className="absolute -bottom-8 left-0 right-0 flex justify-center">
+                  <span className="text-purple-400/60 text-xs font-mono tracking-widest animate-pulse">
+                    {"< AI is coding />"}
+                  </span>
                 </div>
               </div>
             </div>
