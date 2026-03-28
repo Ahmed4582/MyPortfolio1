@@ -1,21 +1,21 @@
 import { useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 
-import { supabase } from "../supabase"; 
+import { supabase } from "../supabase";
 
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import CardProject from "../components/CardProject";
 import TechStackIcon from "../components/TechStackIcon";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
-import { Code, Award, Boxes } from "lucide-react";
+import { Code, Award, Boxes, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 
 const ToggleButton = ({ onClick, isShowingMore }) => {
@@ -136,10 +136,13 @@ export default function FullWidthTabs() {
   const [value, setValue] = useState(0);
   const [projects, setProjects] = useState([]);
   const [certificates, setCertificates] = useState([]);
-  const [showAllProjects, setShowAllProjects] = useState(false);
   const [showAllCertificates, setShowAllCertificates] = useState(false);
   const isMobile = window.innerWidth < 768;
   const initialItems = isMobile ? 4 : 6;
+  const THUMBS_PER_VIEW = 4;
+
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [thumbOffset, setThumbOffset] = useState(0);
 
   useEffect(() => {
     AOS.init({
@@ -152,7 +155,7 @@ export default function FullWidthTabs() {
     try {
       // Fetch data from Supabase in parallel
       const [projectsResponse, certificatesResponse] = await Promise.all([
-        supabase.from("projects").select("*").order('id', { ascending: true }),
+        supabase.from("projects").select("*").order('id', { ascending: false }),
         supabase.from("certificates").select("*").order('id', { ascending: true }), 
       ]);
 
@@ -194,15 +197,27 @@ export default function FullWidthTabs() {
     setValue(newValue);
   };
 
-  const toggleShowMore = useCallback((type) => {
-    if (type === 'projects') {
-      setShowAllProjects(prev => !prev);
-    } else {
-      setShowAllCertificates(prev => !prev);
-    }
+  const toggleShowMore = useCallback(() => {
+    setShowAllCertificates(prev => !prev);
   }, []);
 
-  const displayedProjects = showAllProjects ? projects : projects.slice(0, initialItems);
+  // Reset carousel position when projects load
+  useEffect(() => {
+    if (projects.length > 0) {
+      setActiveProjectIndex(0);
+      setThumbOffset(0);
+    }
+  }, [projects.length]);
+
+  const goProjectNext = () =>
+    setActiveProjectIndex(prev => (prev + 1) % projects.length);
+  const goProjectPrev = () =>
+    setActiveProjectIndex(prev => (prev - 1 + projects.length) % projects.length);
+  const goThumbNext = () =>
+    setThumbOffset(prev => Math.min(prev + 1, Math.max(0, projects.length - THUMBS_PER_VIEW)));
+  const goThumbPrev = () =>
+    setThumbOffset(prev => Math.max(0, prev - 1));
+
   const displayedCertificates = showAllCertificates ? certificates : certificates.slice(0, initialItems);
 
   // Rest of the component (return statement) has no changes
@@ -342,31 +357,176 @@ export default function FullWidthTabs() {
           >
             <div className="w-1/3 flex-shrink-0">
               <TabPanel value={value} index={0} dir={theme.direction}>
-                <div className="container mx-auto flex justify-center items-center overflow-hidden">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
-                    {displayedProjects.map((project, index) => (
-                      <div
-                        key={project.id || index}
-                        data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
-                        data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                {projects.length > 0 ? (
+                  <div className="w-full">
+                    {/* ── Featured Project Carousel ── */}
+                    <div className="relative w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900/80">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={activeProjectIndex}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex flex-col md:flex-row md:h-[400px]"
+                        >
+                          {/* Image */}
+                          <div className="relative w-full md:w-[62%] h-[220px] md:h-full overflow-hidden flex-shrink-0">
+                            <img
+                              src={projects[activeProjectIndex]?.Img}
+                              alt={projects[activeProjectIndex]?.Title}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-slate-900/70 hidden md:block" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent md:hidden" />
+                          </div>
+
+                          {/* Info Panel */}
+                          <div className="flex-1 p-6 md:p-8 flex flex-col justify-center gap-4 bg-slate-900/90 md:bg-transparent">
+                            <span className="text-purple-400 text-xs font-mono tracking-[0.15em] uppercase">
+                              PROJECT {String(activeProjectIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                            </span>
+                            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight">
+                              {projects[activeProjectIndex]?.Title}
+                            </h2>
+                            <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                              {projects[activeProjectIndex]?.Description}
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                              {projects[activeProjectIndex]?.Link ? (
+                                <a
+                                  href={projects[activeProjectIndex].Link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur text-white text-sm font-medium transition-all w-fit"
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                  Live Demo
+                                </a>
+                              ) : (
+                                <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/5 text-gray-500 text-sm w-fit">
+                                  <ExternalLink className="w-4 h-4" />
+                                  Demo N/A
+                                </span>
+                              )}
+                              <Link
+                                to={`/project/${projects[activeProjectIndex]?.id}`}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-purple-600/30 hover:bg-purple-600/50 text-purple-300 text-sm font-medium transition-all w-fit"
+                              >
+                                <ChevronRight className="w-4 h-4" />
+                                Details
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+
+                      {/* Prev / Next arrows */}
+                      <button
+                        onClick={goProjectPrev}
+                        className="absolute left-3 top-[110px] md:top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110"
                       >
-                        <CardProject
-                          Img={project.Img}
-                          Title={project.Title}
-                          Description={project.Description}
-                          Link={project.Link}
-                          id={project.id}
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={goProjectNext}
+                        className="absolute right-3 top-[110px] md:top-1/2 md:right-auto md:left-[59%] -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white flex items-center justify-center transition-all hover:scale-110"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Dot indicators */}
+                    <div className="flex justify-center gap-2 mt-4 flex-wrap">
+                      {projects.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveProjectIndex(i)}
+                          className={`rounded-full transition-all duration-300 ${
+                            i === activeProjectIndex
+                              ? "w-5 h-2 bg-purple-500"
+                              : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                          }`}
                         />
+                      ))}
+                    </div>
+
+                    {/* ── Thumbnail Row ── */}
+                    <div className="mt-8">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {projects.slice(thumbOffset, thumbOffset + THUMBS_PER_VIEW).map((project, i) => {
+                          const projIdx = thumbOffset + i;
+                          const isActive = projIdx === activeProjectIndex;
+                          return (
+                            <div
+                              key={project.id}
+                              data-aos="fade-up"
+                              data-aos-duration="800"
+                              onClick={() => setActiveProjectIndex(projIdx)}
+                              className={`cursor-pointer rounded-xl overflow-hidden border transition-all duration-300 ${
+                                isActive
+                                  ? "border-purple-500 shadow-lg shadow-purple-500/20 scale-[1.02]"
+                                  : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
+                              } bg-gradient-to-br from-slate-900 to-slate-800`}
+                            >
+                              <div className="relative aspect-video overflow-hidden">
+                                <img
+                                  src={project.Img}
+                                  alt={project.Title}
+                                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                  loading="lazy"
+                                />
+                                {isActive && (
+                                  <div className="absolute inset-0 bg-purple-500/10" />
+                                )}
+                              </div>
+                              <div className="p-3">
+                                <p className="text-purple-400/70 text-[10px] font-mono tracking-[0.12em] uppercase truncate mb-1">
+                                  {project.Title.replace(/\s+/g, "-").toUpperCase().slice(0, 28)}
+                                </p>
+                                <h4 className="text-white text-sm font-semibold truncate">{project.Title}</h4>
+                                <p className="text-gray-500 text-xs line-clamp-2 mt-1">{project.Description}</p>
+                                <Link
+                                  to={`/project/${project.id}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="mt-2 inline-flex items-center gap-1 text-purple-400 text-xs hover:text-purple-300 transition-colors"
+                                >
+                                  <ChevronRight className="w-3 h-3" />
+                                  Details
+                                </Link>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
+
+                      {/* Thumbnail pagination */}
+                      {projects.length > THUMBS_PER_VIEW && (
+                        <div className="flex items-center justify-center gap-4 mt-5">
+                          <button
+                            onClick={goThumbPrev}
+                            disabled={thumbOffset === 0}
+                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          <span className="text-gray-500 text-sm">
+                            {thumbOffset + 1}–{Math.min(thumbOffset + THUMBS_PER_VIEW, projects.length)} / {projects.length}
+                          </span>
+                          <button
+                            onClick={goThumbNext}
+                            disabled={thumbOffset + THUMBS_PER_VIEW >= projects.length}
+                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-                {projects.length > initialItems && (
-                  <div className="mt-6 w-full flex justify-start">
-                    <ToggleButton
-                      onClick={() => toggleShowMore('projects')}
-                      isShowingMore={showAllProjects}
-                    />
+                ) : (
+                  <div className="flex items-center justify-center py-20 text-gray-500 text-sm">
+                    Loading projects...
                   </div>
                 )}
               </TabPanel>
@@ -390,7 +550,7 @@ export default function FullWidthTabs() {
                 {certificates.length > initialItems && (
                   <div className="mt-6 w-full flex justify-start">
                     <ToggleButton
-                      onClick={() => toggleShowMore('certificates')}
+                      onClick={toggleShowMore}
                       isShowingMore={showAllCertificates}
                     />
                   </div>
