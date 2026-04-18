@@ -1,8 +1,9 @@
-import { useEffect, memo, useMemo } from "react"
+import { useEffect, memo, useMemo, useState, useCallback } from "react"
 import PropTypes from 'prop-types'
 import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles } from "lucide-react"
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { supabase } from "../supabase"
 
 // Memoized Components
 const Header = memo(() => (
@@ -125,21 +126,42 @@ StatCard.propTypes = {
 };
 
 const AboutPage = () => {
-  // Memoized calculations
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
+  const [stats, setStats] = useState(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
     const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    
-    const startDate = new Date("2023-11-06");
-    const today = new Date();
-    const experience = today.getFullYear() - startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
 
     return {
       totalProjects: storedProjects.length,
       totalCertificates: storedCertificates.length,
-      YearExperience: experience
+      YearExperience: 0
     };
+  });
+
+  const YearExperience = useMemo(() => {
+    const startDate = new Date("2023-11-06");
+    const today = new Date();
+    return today.getFullYear() - startDate.getFullYear() -
+      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+  }, []);
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const [projectsResponse, certificatesResponse] = await Promise.all([
+        supabase.from("projects").select("*", { count: "exact", head: true }),
+        supabase.from("certificates").select("*", { count: "exact", head: true }),
+      ]);
+
+      if (projectsResponse.error) throw projectsResponse.error;
+      if (certificatesResponse.error) throw certificatesResponse.error;
+
+      setStats({
+        totalProjects: projectsResponse.count ?? 0,
+        totalCertificates: certificatesResponse.count ?? 0,
+        YearExperience: 0,
+      });
+    } catch (error) {
+      console.error("Error fetching portfolio stats:", error.message);
+    }
   }, []);
 
   // Optimized AOS initialization
@@ -151,6 +173,7 @@ const AboutPage = () => {
     };
 
     initAOS();
+    fetchStats();
     
     // Debounced resize handler
     let resizeTimer;
@@ -164,7 +187,10 @@ const AboutPage = () => {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
     };
-  }, []);
+  }, [fetchStats]);
+
+  const totalProjects = stats.totalProjects;
+  const totalCertificates = stats.totalCertificates;
 
   // Memoized stats data
   const statsData = useMemo(() => [
