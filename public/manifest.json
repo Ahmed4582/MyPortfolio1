@@ -1,0 +1,17 @@
+{
+  "name": "Ahmed Naser Portfolio",
+  "short_name": "Portfolio",
+  "description": "Frontend developer portfolio with projects, skills, certificates, and contact form.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030014",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
