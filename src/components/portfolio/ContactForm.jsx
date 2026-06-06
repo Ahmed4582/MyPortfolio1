@@ -55,9 +55,10 @@ const ContactForm = () => {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
+          name: formData.name,
+          email: formData.email,
           message: formData.message,
+          title: `Message from ${formData.name}`,
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
       );
@@ -71,10 +72,10 @@ const ContactForm = () => {
         timerProgressBar: true,
       });
       setFormData(initialFormData);
-    } catch {
+    } catch (error) {
       Swal.fire({
         title: "Failed!",
-        text: "Message sending is not configured yet. Add EmailJS keys in .env.local.",
+        text: error?.text || error?.message || "Something went wrong. Please try again.",
         icon: "error",
         confirmButtonColor: "#6366f1",
       });
