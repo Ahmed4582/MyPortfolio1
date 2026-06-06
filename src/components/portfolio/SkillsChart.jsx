@@ -21,7 +21,7 @@ const SkillsChart = () => {
 
   return (
     <section id="Skills" className="bg-[#060913] px-[5%] py-16 text-white lg:px-[10%]">
-      <div className="mx-auto max-w-5xl">
+      <div>
         <div className="mb-10 text-center">
           <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">
             What I Use

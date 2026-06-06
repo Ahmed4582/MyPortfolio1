@@ -69,7 +69,7 @@ const AboutPage = () => {
         </p>
       </div>
 
-      <div className="mx-auto max-w-6xl">
+      <div>
         <div className="grid items-center gap-14 lg:grid-cols-[1fr_360px]">
 
           {/* ── Left content ── */}

@@ -40,7 +40,7 @@ const ContactPage = () => {
         </p>
       </div>
 
-      <div className="mx-auto max-w-5xl grid gap-8 lg:grid-cols-[1fr_420px]" data-aos="fade-up" data-aos-duration="800">
+      <div className="grid gap-8 lg:grid-cols-2" data-aos="fade-up" data-aos-duration="800">
 
         {/* ── Left — Info panel ── */}
         <div className="flex flex-col gap-6">

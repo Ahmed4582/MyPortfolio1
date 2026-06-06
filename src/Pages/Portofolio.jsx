@@ -250,7 +250,7 @@ const Portofolio = () => {
 
   return (
     <section
-      className="w-full overflow-hidden bg-[#060913] px-[5%] pt-14 sm:mt-0 md:px-[10%]"
+      className="w-full overflow-hidden bg-[#060913] px-[5%] pt-14 sm:mt-0 lg:px-[10%]"
       id="Portofolio"
     >
       {/* Header */}
