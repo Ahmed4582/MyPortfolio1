@@ -1,0 +1,162 @@
+[
+  {
+    "id": 16,
+    "title": "Event Management Platform with Admin Dashboard",
+    "description": "A fully dynamic event management system integrated with a powerful admin dashboard (CMS) that enables real-time control over content, event creation, user registrations, and platform updates without redeployment.",
+    "image": "https://image2url.com/r2/default/images/1774713397062-7658cff6-af52-4baa-95cf-a969250a0ecb.png",
+    "live_url": "https://event.mediastation.sa/",
+    "github_url": "https://github.com/youssefkhaled23/conference_platform_frontend",
+    "technologies": ["Next.js", "React", "Node.js", "Dashboard CMS", "REST API"],
+    "case_study": "Full admin dashboard to manage all website content. Dynamic event creation and updates. User registration and event booking system. Real-time content updates without redeployment. Responsive and modern UI design. Scalable architecture for handling multiple events."
+  },
+  {
+    "id": 15,
+    "title": "Meiskan Construction Marketplace Platform",
+    "description": "A scalable construction marketplace platform designed to connect project owners with contractors through a transparent bidding system, enabling efficient project management, real-time communication, and streamlined workflows.",
+    "image": "https://image2url.com/r2/default/images/1774713166053-f7429eb2-1e1d-4469-9c7d-00afb34f92c1.png",
+    "live_url": "https://meiskan.com/",
+    "github_url": "https://github.com/Ahmed4582/meiskan",
+    "technologies": ["Next.js", "React", "Node.js", "REST API", "Marketplace Architecture"],
+    "case_study": "Project posting and bidding system. Contractor and client matching. Real-time communication between users. Project tracking and workflow management. Secure and transparent deal process. Scalable marketplace architecture."
+  },
+  {
+    "id": 14,
+    "title": "SeenSoal Marketing Automation Platform",
+    "description": "A powerful SaaS platform for marketing automation and customer communication, enabling businesses to run campaigns, send bulk messages, and manage customer interactions through multiple channels.",
+    "image": "https://image2url.com/r2/default/images/1774713000169-59ebd5cc-3f1b-4b74-9c9e-1eeafd779a45.png",
+    "live_url": "https://seensoal.com/",
+    "github_url": "https://github.com/Ahmed4582/Ssen",
+    "technologies": ["Next.js", "React", "Node.js", "REST API", "SaaS Architecture"],
+    "case_study": "Bulk messaging and campaign management. Multi-channel communication system. Chatbot and live customer support. Custom API integrations. Real-time customer interaction tools. Scalable SaaS infrastructure."
+  },
+  {
+    "id": 13,
+    "title": "Muro Perfume E-commerce Website",
+    "description": "A high-end e-commerce platform for a luxury perfume brand, featuring a visually rich interface, seamless navigation, and optimized performance to enhance the online shopping experience.",
+    "image": "https://image2url.com/r2/default/images/1774712840555-e8626e04-a956-4edd-abd2-338969a27382.png",
+    "live_url": "http://murokw.com/",
+    "github_url": "https://github.com/Ahmed4582/mourEcommerce",
+    "technologies": ["Next.js", "React", "Tailwind CSS"],
+    "case_study": "Luxury and modern UI design. Product listing and browsing system. Responsive design for all devices. Optimized performance and fast loading. User-friendly shopping experience."
+  },
+  {
+    "id": 12,
+    "title": "Prime SaaS Platform",
+    "description": "A modern SaaS platform designed to help businesses manage digital services, automate workflows, and scale efficiently with a clean and user-friendly interface.",
+    "image": "https://image2url.com/r2/default/images/1774712548082-a01ccab2-b1a8-4bfc-a541-5d537a1f0332.png",
+    "live_url": "https://prime-saas.com/ar",
+    "github_url": null,
+    "technologies": ["Next.js", "React", "Tailwind CSS", "Node.js"],
+    "case_study": "Clean and modern SaaS dashboard UI. Multi-service management system. Scalable architecture for business growth. Responsive design for all devices. Optimized performance and fast loading."
+  },
+  {
+    "id": 11,
+    "title": "POS Dashboard",
+    "description": "A modern, responsive POS Dashboard built with Next.js 15 and React 19 for managing sales, orders, rentals, categories, discounts, packages, and statistics. Supports multi-language (Arabic, English, Turkish) with RTL/LTR design.",
+    "image": "https://i.postimg.cc/5y692MFz/Screenshot-2025-12-04-035011.png",
+    "live_url": "https://system-dashboards.vercel.app/statistics",
+    "github_url": "https://github.com/Ahmed4582/system-dashboards",
+    "technologies": ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS 4", "@tanstack/react-query", "Radix UI", "Recharts", "Framer Motion"],
+    "case_study": "Manage Orders with add/edit/delete and refund functionality. Manage Rentals with lifecycle control. CRUD for Categories, Discounts, and Packages. Interactive Statistics with charts. Multi-language support (Arabic, English, Turkish) with RTL/LTR switching. Theme management (dark/light mode)."
+  },
+  {
+    "id": 10,
+    "title": "Lewa Al-Hawashem",
+    "description": "A modern, fully responsive official website for the Lewa Al-Hawashem clan in Irbid, Jordan. Showcases the clan's history, news, photo galleries, contact information, and geographical details with Arabic RTL cultural identity.",
+    "image": "https://i.postimg.cc/rsMhc80F/Screenshot-2025-12-04-020551.png",
+    "live_url": "https://al-hashemi.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/Al-Hashemi",
+    "technologies": ["React", "React Router DOM", "Vite", "Tailwind CSS", "React Leaflet", "React Slick"],
+    "case_study": "Fully responsive RTL design. Interactive news slider and gallery with category filtering. News page with search and filter. Contact page with validated form. Interactive map using React Leaflet. SPA architecture with smooth navigation."
+  },
+  {
+    "id": 9,
+    "title": "CRUD Application",
+    "description": "A simple and clean CRUD training application built with React. Allows users to create, read, update, and delete data with a smooth and responsive UI, ideal for beginners practicing core frontend skills.",
+    "image": "https://i.postimg.cc/3JgKn97s/Screenshot-2025-12-04-020130.png",
+    "live_url": "https://crud-applcation.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/CrudApplcation",
+    "technologies": ["React", "JavaScript", "Tailwind CSS"],
+    "case_study": "Full create, read, update, and delete operations. Clean and user-friendly interface. Fully responsive design. Fast performance with React. Beginner-friendly structure with smooth Tailwind CSS styling."
+  },
+  {
+    "id": 8,
+    "title": "Travel Bank",
+    "description": "A modern, responsive, and high-performance company website for a travel and tourism agency. Showcases travel packages, destinations, services, and contact information with smooth animations and fast navigation.",
+    "image": "https://i.postimg.cc/BZpLMqg5/Screenshot-2025-12-04-015546.png",
+    "live_url": "https://travel-bank.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/TravelBank",
+    "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    "case_study": "Fully responsive design across all devices. Fast navigation with Next.js routing. SEO optimized for better visibility. Smooth animations powered by Framer Motion. Showcase of travel packages & destinations. Interactive sections with engaging motion effects."
+  },
+  {
+    "id": 7,
+    "title": "Caarbon Rent Car",
+    "description": "A modern and responsive web application for car rental built with React.js, running entirely with a Mock API. Features product management, user authentication, shopping cart, wishlist, checkout, and multi-language support.",
+    "image": "https://i.postimg.cc/J0VyvnFk/Screenshot-2025-12-04-014143.png",
+    "live_url": "https://caarbon.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/caarbon",
+    "technologies": ["React", "TypeScript", "Vite", "Redux Toolkit", "Tailwind CSS", "i18next", "Framer Motion", "Formik", "Yup", "Axios"],
+    "case_study": "Product management with search, filter, and categorize. Authentication with OTP verification and protected routes. Shopping Cart persisting in localStorage. Wishlist and User Management. Checkout & Payment flow. Multi-language support (Arabic and English)."
+  },
+  {
+    "id": 6,
+    "title": "Rawasi Kristal",
+    "description": "Rawasi Kristal is a website for interior design, offering a modern and responsive platform to showcase projects, blogs, and design ideas. Supports multiple languages (Arabic and English) with advanced SEO features.",
+    "image": "https://i.postimg.cc/GmNmVVW5/Screenshot-2025-12-04-011443.png",
+    "live_url": "https://rawaci-6t4s.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/rawaci",
+    "technologies": ["React", "TypeScript", "Bootstrap"],
+    "case_study": "Blog showcase system. Advanced SEO features for better online visibility. Multi-language support (Arabic and English) with i18n. Fully responsive design."
+  },
+  {
+    "id": 5,
+    "title": "Dashboard Cleano",
+    "description": "A modern and fully responsive web application built with React.js for managing a laundry service business. Features dynamic product management, real-time order tracking, user authentication, shopping cart, wishlist, and multi-language support.",
+    "image": "https://i.postimg.cc/T1CQkdW6/Screenshot-2025-12-03-235122.png",
+    "live_url": null,
+    "github_url": "https://github.com/Ahmed4582/DashboardCleano",
+    "technologies": ["React", "Tailwind CSS", "Supabase", "Vite"],
+    "case_study": "Authentication and user management. Responsive design optimized for all devices. Full dashboard with business analytics. Order management and tracking system."
+  },
+  {
+    "id": 4,
+    "title": "ICD Company – International",
+    "description": "A comprehensive introductory website for IDC, specializing in the sale and purchase of heavy equipment and spare parts. Includes an equipment gallery, advanced filtering system, multilingual support, and full product detail pages.",
+    "image": "https://i.postimg.cc/vZLwG999/Screenshot-2025-12-03-234453.png",
+    "live_url": "https://icd-lyart.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/ICDProject",
+    "technologies": ["React", "Vite", "Tailwind CSS", "React Router", "Framer Motion", "i18next", "Swiper", "React Leaflet", "EmailJS", "Axios"],
+    "case_study": "Multi-language support (Arabic/English). Equipment and Spare Parts catalogs. Product filtering & sorting with detail pages. Image and Video Gallery. Contact form with interactive map. Pagination and loading states. SEO optimized."
+  },
+  {
+    "id": 3,
+    "title": "FAHAD AL-NASSER – Portfolio",
+    "description": "A modern and fully responsive landing website for a Saudi law firm, designed using React and Tailwind CSS. Highlights legal services, showcases team expertise, and provides a professional user experience with smooth animations.",
+    "image": "https://i.postimg.cc/8Cyr77W4/Screenshot-2025-12-03-224931.png",
+    "live_url": "https://elfahdapp.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/elfahdapp",
+    "technologies": ["React", "Tailwind CSS", "Framer Motion", "React Router", "Vite"],
+    "case_study": "Fully responsive design with smooth animations. Modern UI/UX with legal services section. Contact form and About The Firm section. Fast performance and SEO-friendly structure."
+  },
+  {
+    "id": 2,
+    "title": "E-Commerce Moraco Shop",
+    "description": "A complete modern e-commerce platform built with Next.js, TypeScript, Tailwind CSS, and Supabase. Includes authentication, product browsing, filters, cart, wishlist, and a fully responsive UI.",
+    "image": "https://i.postimg.cc/D0Tf72DS/Screenshot-2025-12-03-215011.png",
+    "live_url": "https://mrocoo-sryia.vercel.app/",
+    "github_url": "https://github.com/Ahmed4582/mrocoo-sryia",
+    "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Shadcn UI", "Framer Motion"],
+    "case_study": "Authentication and user management. Shopping Cart and Wishlist system. Product filtering with Category Pages. Admin Dashboard and Search System. Responsive design with i18n multi-language support."
+  },
+  {
+    "id": 1,
+    "title": "OneDoor IT – Company Website",
+    "description": "A modern and responsive company website for OneDoor IT, showcasing services, portfolio, and contact solutions. Built with a clean UI, smooth animations, and a professional structure that reflects the brand identity.",
+    "image": "https://i.postimg.cc/X734VGMZ/Screenshot-2025-12-02-142739.png",
+    "live_url": "https://www.onedoorit.com/",
+    "github_url": null,
+    "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI", "Framer Motion"],
+    "case_study": "Fully responsive design with modern UI using Shadcn components. Smooth animations using Framer Motion. Clean and optimized code structure. Company services and portfolio sections. SEO-friendly Next.js architecture."
+  }
+]

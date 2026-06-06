@@ -1,335 +1,186 @@
-import { useEffect, memo, useMemo, useState, useCallback } from "react"
-import PropTypes from 'prop-types'
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles } from "lucide-react"
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { supabase } from "../supabase"
+import { memo, useMemo } from "react";
+import { Award, BookOpen, Briefcase, Code, FileText, Globe, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+import useJsonData from "../hooks/useJsonData";
 
-// Memoized Components
-const Header = memo(() => (
-  <div className="text-center lg:mb-8 mb-2 px-[5%]">
-    <div className="inline-block relative group">
-      <h2 
-        className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]" 
-        data-aos="zoom-in-up"
-        data-aos-duration="600"
-      >
-        About Me
-      </h2>
-    </div>
-    <p 
-      className="mt-2 text-gray-400 max-w-2xl mx-auto text-base sm:text-lg flex items-center justify-center gap-2"
-      data-aos="zoom-in-up"
-      data-aos-duration="800"
-    >
-      <Sparkles className="w-5 h-5 text-purple-400" />
-      Transforming ideas into digital experiences
-      <Sparkles className="w-5 h-5 text-purple-400" />
-    </p>
-  </div>
-));
-Header.displayName = 'Header';
+const aboutItems = [
+  {
+    title: "Bio",
+    icon: Sparkles,
+    copy: "Frontend Developer focused on responsive React experiences, practical UX, and clean implementation details that make interfaces reliable across devices.",
+  },
+  {
+    title: "Education",
+    icon: BookOpen,
+    copy: "Computer Science and Mathematics student building a strong foundation in software engineering, algorithms, and web application architecture.",
+  },
+  {
+    title: "Experience",
+    icon: Briefcase,
+    copy: "1.5+ years building React, Next.js, JavaScript, TypeScript, HTML, CSS, and Tailwind projects across solo and collaborative work.",
+  },
+  {
+    title: "Current Work",
+    icon: Code,
+    copy: "Developing JSON-driven portfolio sections, accessible UI patterns, and client-side workflows with Framer Motion and EmailJS.",
+  },
+];
 
-const ProfileImage = memo(() => (
-  <div className="flex justify-end items-center sm:p-12 sm:py-0 sm:pb-0 p-0 py-2 pb-2">
-    <div 
-      className="relative group" 
-      data-aos="fade-up"
-      data-aos-duration="1000"
-    >
-      {/* Optimized gradient backgrounds with reduced complexity for mobile */}
-      <div className="absolute -inset-6 opacity-[25%] z-0 hidden sm:block">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 rounded-full blur-2xl animate-spin-slower" />
-        <div className="absolute inset-0 bg-gradient-to-l from-fuchsia-500 via-rose-500 to-pink-600 rounded-full blur-2xl animate-pulse-slow opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-cyan-500 to-teal-400 rounded-full blur-2xl animate-float opacity-50" />
-      </div>
-
-      <div className="relative">
-        <div className="w-72 h-72 sm:w-80 sm:h-80 rounded-full overflow-hidden shadow-[0_0_40px_rgba(120,119,198,0.3)] transform transition-all duration-700 group-hover:scale-105">
-          <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
-          
-          {/* Optimized overlay effects - disabled on mobile */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" />
-          <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
-          
-          <img
-            src="/Photo.jpg"
-            alt="Profile"
-            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
-            loading="eager"
-          />
-
-          {/* Advanced hover effects - desktop only */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 z-20 hidden sm:block">
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-            <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-white/10 to-transparent transform translate-y-full group-hover:-translate-y-full transition-transform duration-1000 delay-100" />
-            <div className="absolute inset-0 rounded-full border-8 border-white/10 scale-0 group-hover:scale-100 transition-transform duration-700 animate-pulse-slow" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-));
-ProfileImage.displayName = 'ProfileImage';
-
-const StatCard = memo(({ icon: Icon, color, value, label, description, animation }) => (
-  <div data-aos={animation} data-aos-duration={1300} className="relative group">
-    <div className="relative z-10 bg-gray-900/50 backdrop-blur-lg rounded-2xl p-6 border border-white/10 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl h-full flex flex-col justify-between">
-      <div className={`absolute -z-10 inset-0 bg-gradient-to-br ${color} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
-      
-      <div className="flex items-center justify-between mb-4">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white/10 transition-transform group-hover:rotate-6">
-          <Icon className="w-8 h-8 text-white" />
-        </div>
-        <span 
-          className="text-4xl font-bold text-white"
-          data-aos="fade-up-left"
-          data-aos-duration="1500"
-          data-aos-anchor-placement="top-bottom"
-        >
-          {value}
-        </span>
-      </div>
-
-      <div>
-        <p 
-          className="text-sm uppercase tracking-wider text-gray-300 mb-2"
-          data-aos="fade-up"
-          data-aos-duration="800"
-          data-aos-anchor-placement="top-bottom"
-        >
-          {label}
-        </p>
-        <div className="flex items-center justify-between">
-          <p 
-            className="text-xs text-gray-400"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            data-aos-anchor-placement="top-bottom"
-          >
-            {description}
-          </p>
-          <ArrowUpRight className="w-4 h-4 text-white/50 group-hover:text-white transition-colors" />
-        </div>
-      </div>
-    </div>
-  </div>
-));
-StatCard.displayName = 'StatCard';
-StatCard.propTypes = {
-  icon: PropTypes.elementType.isRequired,
-  color: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  label: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  animation: PropTypes.string.isRequired,
+const cardVariants = {
+  hidden:  { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0 },
 };
 
 const AboutPage = () => {
-  const [stats, setStats] = useState(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
+  const { data: projects }     = useJsonData("/data/projects.json");
+  const { data: certificates } = useJsonData("/data/certificates.json");
 
-    return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
-      YearExperience: 0
-    };
-  });
-
-  const YearExperience = useMemo(() => {
-    const startDate = new Date("2023-11-06");
+  const yearsExperience = useMemo(() => {
+    const start = new Date("2023-11-06");
     const today = new Date();
-    return today.getFullYear() - startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
+    return (
+      today.getFullYear() -
+      start.getFullYear() -
+      (today < new Date(today.getFullYear(), start.getMonth(), start.getDate()) ? 1 : 0)
+    );
   }, []);
 
-  const fetchStats = useCallback(async () => {
-    try {
-      const [projectsResponse, certificatesResponse] = await Promise.all([
-        supabase.from("projects").select("*", { count: "exact", head: true }),
-        supabase.from("certificates").select("*", { count: "exact", head: true }),
-      ]);
-
-      if (projectsResponse.error) throw projectsResponse.error;
-      if (certificatesResponse.error) throw certificatesResponse.error;
-
-      setStats({
-        totalProjects: projectsResponse.count ?? 0,
-        totalCertificates: certificatesResponse.count ?? 0,
-        YearExperience: 0,
-      });
-    } catch (error) {
-      console.error("Error fetching portfolio stats:", error.message);
-    }
-  }, []);
-
-  // Optimized AOS initialization
-  useEffect(() => {
-    const initAOS = () => {
-      AOS.init({
-        once: false, 
-      });
-    };
-
-    initAOS();
-    fetchStats();
-    
-    // Debounced resize handler
-    let resizeTimer;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(initAOS, 250);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
-    };
-  }, [fetchStats]);
-
-  const totalProjects = stats.totalProjects;
-  const totalCertificates = stats.totalCertificates;
-
-  // Memoized stats data
-  const statsData = useMemo(() => [
-    {
-      icon: Code,
-      color: "from-[#6366f1] to-[#a855f7]",
-      value: totalProjects,
-      label: "Total Projects",
-      description: "Innovative web solutions crafted",
-      animation: "fade-right",
-    },
-    {
-      icon: Award,
-      color: "from-[#a855f7] to-[#6366f1]",
-      value: totalCertificates,
-      label: "Certificates",
-      description: "Professional skills validated",
-      animation: "fade-up",
-    },
-    {
-      icon: Globe,
-      color: "from-[#6366f1] to-[#a855f7]",
-      value: YearExperience,
-      label: "Years of Experience",
-      description: "Continuous learning journey",
-      animation: "fade-left",
-    },
-  ], [totalProjects, totalCertificates, YearExperience]);
+  const stats = [
+    { icon: Code,    value: projects.length,     label: "Projects",      desc: "Live & demo work" },
+    { icon: Award,   value: certificates.length,  label: "Certificates",  desc: "Validated learning" },
+    { icon: Globe,   value: yearsExperience,       label: "Years",         desc: "Focused practice" },
+  ];
 
   return (
-    <div
-      className="h-auto pb-[10%] text-white overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] mt-10 sm-mt-0" 
+    <section
       id="About"
+      className="overflow-hidden bg-[#060913] px-[5%] py-20 text-white lg:px-[10%]"
     >
-      <Header />
-
-      <div className="w-full mx-auto pt-8 sm:pt-12 relative">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div className="space-y-6 text-center lg:text-left">
-            <h2 
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold"
-              data-aos="fade-right"
-              data-aos-duration="1000"
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-                Hello, I&apos;m
-              </span>
-              <span 
-                className="block mt-2 text-gray-200"
-                data-aos="fade-right"
-                data-aos-duration="1300"
-              >
-              
-              Ahmed Naser Metwally
-              </span>
-            </h2>
-            
-            <p 
-              className="text-base sm:text-lg lg:text-xl text-gray-400 leading-relaxed text-justify pb-4 sm:pb-0"
-              data-aos="fade-right"
-              data-aos-duration="1500"
-            >
-Frontend Developer with 1.5+ years of experience building responsive web apps using React, Next.js, TypeScript, JavaScript, HTML, CSS, Sass, and Tailwind. Experienced in solo and team projects, familiar with Supabase and Convex, and passionate about clean, efficient code and interactive web experiences.      </p>
-
-               {/* Quote Section */}
-      <div 
-        className="relative bg-gradient-to-br from-[#6366f1]/5 via-transparent to-[#a855f7]/5 border border-gradient-to-r border-[#6366f1]/30 rounded-2xl p-4 my-6 backdrop-blur-md shadow-2xl overflow-hidden"
-        data-aos="fade-up"
-        data-aos-duration="1700"
-      >
-        {/* Floating orbs background */}
-        <div className="absolute top-2 right-4 w-16 h-16 bg-gradient-to-r from-[#6366f1]/20 to-[#a855f7]/20 rounded-full blur-xl"></div>
-        <div className="absolute -bottom-4 -left-2 w-12 h-12 bg-gradient-to-r from-[#a855f7]/20 to-[#6366f1]/20 rounded-full blur-lg"></div>
-        
-        {/* Quote icon */}
-        <div className="absolute top-3 left-4 text-[#6366f1] opacity-30">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
-          </svg>
-        </div>
-        
-        <blockquote className="text-gray-300 text-center lg:text-left italic font-medium text-sm relative z-10 pl-6">
-          &ldquo;Leveraging AI as a professional tool, not a replacement.&rdquo;
-        </blockquote>
+      {/* Section header */}
+      <div className="mb-14 text-center">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">
+          Who I Am
+        </p>
+        <h2 className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
+          About Me
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-slate-400">
+          Transforming ideas into accessible, responsive digital experiences.
+        </p>
       </div>
 
-            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://drive.google.com/file/d/1siJ54n-H7qS1zIhYdZCN1kMCRy1xvbKs/view?usp=sharing" className="w-full lg:w-auto">
-              <button 
-                data-aos="fade-up"
-                data-aos-duration="800"
-                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg hover:shadow-xl "
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-center gap-14 lg:grid-cols-[1fr_360px]">
+
+          {/* ── Left content ── */}
+          <div className="space-y-8">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
+                Ahmed Naser Metwally
+              </p>
+              <h3 className="mt-3 text-3xl font-bold text-slate-100 md:text-4xl leading-snug">
+                Frontend developer building practical web interfaces.
+              </h3>
+              <p className="mt-4 text-base leading-relaxed text-slate-400">
+                I work with React, Tailwind CSS, JavaScript, TypeScript, and
+                modern frontend tooling to create fast, usable interfaces. I use
+                AI as a professional tool to accelerate research and iteration
+                while keeping implementation decisions grounded in clear UX and
+                maintainable code.
+              </p>
+            </div>
+
+            {/* Info cards grid */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {aboutItems.map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <motion.article
+                    key={item.title}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    className="group rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5 transition-all duration-300 hover:border-cyan-500/20 hover:bg-cyan-500/[0.04]"
+                  >
+                    <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h4 className="font-semibold text-white">{item.title}</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.copy}</p>
+                  </motion.article>
+                );
+              })}
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href="https://drive.google.com/file/d/10RVNng_lPuV5UnaWvZ-hMb5BPCkWQrd3/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:opacity-90"
               >
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
-              </button>
+                <FileText className="h-4 w-4" />
+                Download CV
               </a>
-              <a href="#Portofolio" className="w-full lg:w-auto">
-              <button 
-                data-aos="fade-up"
-                data-aos-duration="1000"
-                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg border border-[#a855f7]/50 text-[#a855f7] font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 hover:bg-[#a855f7]/10 "
+              <a
+                href="#Portofolio"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/5 px-5 py-3 text-sm font-semibold text-cyan-400 transition hover:bg-cyan-500/15"
               >
-                <Code className="w-4 h-4 sm:w-5 sm:h-5" /> View Projects
-              </button>
+                <Code className="h-4 w-4" />
+                View Projects
               </a>
             </div>
           </div>
 
-          <ProfileImage />
+          {/* ── Right — Photo ── */}
+          <div className="mx-auto w-full max-w-[360px]">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 blur-3xl" />
+              <div className="relative overflow-hidden rounded-3xl border border-cyan-500/15 shadow-[0_0_50px_rgba(34,211,238,0.1)]">
+                <img
+                  src="/Photo.jpg"
+                  alt="Ahmed Naser Metwally"
+                  className="aspect-square w-full object-cover object-top"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <a href="#Portofolio">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 cursor-pointer">
-            {statsData.map((stat) => (
-              <StatCard key={stat.label} {...stat} />
-            ))}
-          </div>
-        </a>
+        {/* ── Stats row ── */}
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.a
+                key={stat.label}
+                href="#Portofolio"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="group rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 transition-all duration-300 hover:border-cyan-500/25 hover:bg-cyan-500/[0.04]"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="text-5xl font-extrabold text-white">{stat.value}</span>
+                </div>
+                <h4 className="mt-4 text-sm font-semibold uppercase tracking-wide text-slate-200">
+                  {stat.label}
+                </h4>
+                <p className="mt-1 text-sm text-slate-500">{stat.desc}</p>
+              </motion.a>
+            );
+          })}
+        </div>
       </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes spin-slower {
-          to { transform: rotate(360deg); }
-        }
-        .animate-bounce-slow {
-          animation: bounce 3s infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulse 3s infinite;
-        }
-        .animate-spin-slower {
-          animation: spin-slower 8s linear infinite;
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
 

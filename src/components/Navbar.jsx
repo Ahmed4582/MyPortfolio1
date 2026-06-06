@@ -1,177 +1,130 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-
-
+import useScrollSpy from "../hooks/useScrollSpy";
 
 const navItems = [
-    { href: "#Home", label: "Home" },
-    { href: "#About", label: "About" },
-    { href: "#Portofolio", label: "Portofolio" },
-    { href: "#Contact", label: "Contact" },
+  { href: "#Home",       label: "Home" },
+  { href: "#About",      label: "About" },
+  { href: "#Skills",     label: "Skills" },
+  { href: "#Portofolio", label: "Portfolio" },
+  { href: "#Contact",    label: "Contact" },
 ];
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("Home");
-    
+  const [isOpen, setIsOpen]     = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const activeSection           = useScrollSpy();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-            const sections = navItems.map(item => {
-                const section = document.querySelector(item.href);
-                if (section) {
-                    return {
-                        id: item.href.replace("#", ""),
-                        offset: section.offsetTop - 550,
-                        height: section.offsetHeight
-                    };
-                }
-                return null;
-            }).filter(Boolean);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-            const currentPosition = window.scrollY;
-            const active = sections.find(section => 
-                currentPosition >= section.offset && 
-                currentPosition < section.offset + section.height
-            );
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+  }, [isOpen]);
 
-            if (active) {
-                setActiveSection(active.id);
-            }
-        };
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" });
+    setIsOpen(false);
+  };
 
-        window.addEventListener("scroll", handleScroll);
-        handleScroll();
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  const isActive = (href) => activeSection === href.substring(1);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-    }, [isOpen]);
+  return (
+    <nav
+      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+        isOpen
+          ? "bg-[#060913]"
+          : scrolled
+          ? "bg-[#060913]/80 backdrop-blur-xl border-b border-white/[0.05]"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto px-[5%] lg:px-[10%]">
+        <div className="flex items-center justify-between h-16">
 
-    const scrollToSection = (e, href) => {
-        e.preventDefault();
-        const section = document.querySelector(href);
-        if (section) {
-            const top = section.offsetTop - 100;
-            window.scrollTo({
-                top: top,
-                behavior: "smooth"
-            });
-        }
-        setIsOpen(false);
-    };
+          {/* Logo */}
+          <a
+            href="#Home"
+            onClick={(e) => scrollToSection(e, "#Home")}
+            className="text-lg font-bold font-mono tracking-tight"
+          >
+            <span className="text-slate-400">&lt;</span>
+            <span className="text-white">Ahmed</span>
+            <span className="text-cyan-400">.</span>
+            <span className="text-cyan-400">dev</span>
+            <span className="text-slate-400"> /&gt;</span>
+          </a>
 
-    return (
-        <nav
-            className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-                isOpen
-                    ? "bg-[#030014]"
-                    : scrolled
-                    ? "bg-[#030014]/50 backdrop-blur-xl"
-                    : "bg-transparent"
-            }`}
-        >
-            <div className="mx-auto px-[5%] sm:px-[5%] lg:px-[10%]">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <div className="flex-shrink-0">
-                        <a
-                            href="#Home"
-                            onClick={(e) => scrollToSection(e, "#Home")}
-                            className="text-xl font-bold bg-gradient-to-r from-[#a855f7] to-[#6366f1] bg-clip-text text-transparent"
-                        >
-                            Ahmed
-                        </a>
-                    </div>
-        
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:block">
-                        <div className="ml-8 flex items-center space-x-8">
-                            {navItems.map((item) => (
-                                <a
-                                    key={item.label}
-                                    href={item.href}
-                                    onClick={(e) => scrollToSection(e, item.href)}
-                                    className="group relative px-1 py-2 text-sm font-medium"
-                                >
-                                    <span
-                                        className={`relative z-10 transition-colors duration-300 ${
-                                            activeSection === item.href.substring(1)
-                                                ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
-                                                : "text-[#e2d3fd] group-hover:text-white"
-                                        }`}
-                                    >
-                                        {item.label}
-                                    </span>
-                                    <span
-                                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] transform origin-left transition-transform duration-300 ${
-                                            activeSection === item.href.substring(1)
-                                                ? "scale-x-100"
-                                                : "scale-x-0 group-hover:scale-x-100"
-                                        }`}
-                                    />
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-        
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className={`relative p-2 text-[#e2d3fd] hover:text-white transition-transform duration-300 ease-in-out transform ${
-                                isOpen ? "rotate-90 scale-125" : "rotate-0 scale-100"
-                            }`}
-                        >
-                            {isOpen ? (
-                                <X className="w-6 h-6" />
-                            ) : (
-                                <Menu className="w-6 h-6" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        
-            {/* Mobile Menu */}
-            <div
-                className={`md:hidden transition-all duration-300 ease-in-out ${
-                    isOpen
-                        ? "max-h-screen opacity-100"
-                        : "max-h-0 opacity-0 overflow-hidden"
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  isActive(item.href)
+                    ? "text-cyan-400 bg-cyan-400/10"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
+              >
+                {item.label}
+                {isActive(item.href) && (
+                  <span className="absolute bottom-1 left-4 right-4 h-px bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" />
+                )}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            className="md:hidden p-2 text-slate-400 hover:text-white transition-colors"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+        }`}
+      >
+        <div className="px-6 pt-2 pb-6 space-y-1 border-t border-white/[0.05]">
+          {navItems.map((item, i) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(e) => scrollToSection(e, item.href)}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                isActive(item.href)
+                  ? "text-cyan-400 bg-cyan-400/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+              style={{
+                transitionDelay: `${i * 50}ms`,
+                transform: isOpen ? "translateX(0)" : "translateX(20px)",
+              }}
             >
-                <div className="px-4 py-6 space-y-4">
-                    {navItems.map((item, index) => (
-                        <a
-                            key={item.label}
-                            href={item.href}
-                            onClick={(e) => scrollToSection(e, item.href)}
-                            className={`block px-4 py-3 text-lg font-medium transition-all duration-300 ease ${
-                                activeSection === item.href.substring(1)
-                                    ? "bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent font-semibold"
-                                    : "text-[#e2d3fd] hover:text-white"
-                            }`}
-                            style={{
-                                transitionDelay: `${index * 100}ms`,
-                                transform: isOpen ? "translateX(0)" : "translateX(50px)",
-                                opacity: isOpen ? 1 : 0,
-                            }}
-                        >
-                            {item.label}
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </nav>
-    );
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

@@ -1,66 +1,67 @@
-import  { useEffect, useRef } from "react"
-
-const initialPositions = [
-	{ x: -4, y: 0 },
-	{ x: -4, y: 0 },
-	{ x: 20, y: -8 },
-	{ x: 20, y: -8 },
-]
+import { useEffect, useRef } from "react";
 
 const AnimatedBackground = () => {
-	const blobRefs = useRef([])
+  const blobRefs = useRef([]);
 
-	useEffect(() => {
-		let requestId
+  useEffect(() => {
+    let requestId;
 
-		const handleScroll = () => {
-			const newScroll = window.pageYOffset
+    const handleScroll = () => {
+      const scroll = window.pageYOffset;
+      blobRefs.current.forEach((blob, i) => {
+        if (!blob) return;
+        const x = Math.sin(scroll / 120 + i * 0.8) * 280;
+        const y = Math.cos(scroll / 120 + i * 0.8) * 50;
+        blob.style.transform = `translate(${x}px, ${y}px)`;
+        blob.style.transition = "transform 1.6s ease-out";
+      });
+      requestId = requestAnimationFrame(handleScroll);
+    };
 
-			blobRefs.current.forEach((blob, index) => {
-				const initialPos = initialPositions[index]
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(requestId);
+    };
+  }, []);
 
-				// Calculating movement in both X and Y direction
-				const xOffset = Math.sin(newScroll / 100 + index * 0.5) * 340 // Horizontal movement
-				const yOffset = Math.cos(newScroll / 100 + index * 0.5) * 40 // Vertical movement
+  return (
+    <div className="fixed inset-0 pointer-events-none">
+      {/* Cyan blob — top right */}
+      <div
+        ref={(r) => (blobRefs.current[0] = r)}
+        className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-cyan-500 rounded-full mix-blend-screen filter blur-[140px] opacity-[0.07]"
+      />
+      {/* Blue blob — center left */}
+      <div
+        ref={(r) => (blobRefs.current[1] = r)}
+        className="absolute top-1/3 -left-32 w-[420px] h-[420px] bg-blue-500 rounded-full mix-blend-screen filter blur-[130px] opacity-[0.06]"
+      />
+      {/* Cyan/teal blob — bottom right */}
+      <div
+        ref={(r) => (blobRefs.current[2] = r)}
+        className="absolute -bottom-24 right-1/4 w-[460px] h-[460px] bg-sky-400 rounded-full mix-blend-screen filter blur-[140px] opacity-[0.05]"
+      />
+      {/* Subtle indigo blob — bottom left */}
+      <div
+        ref={(r) => (blobRefs.current[3] = r)}
+        className="absolute bottom-0 -left-20 w-[360px] h-[360px] bg-indigo-600 rounded-full mix-blend-screen filter blur-[120px] opacity-[0.05]"
+      />
 
-				const x = initialPos.x + xOffset
-				const y = initialPos.y + yOffset
+      {/* Fine grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right,#60a5fa 1px,transparent 1px),linear-gradient(to bottom,#60a5fa 1px,transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
-				// Apply transformation with smooth transition
-				blob.style.transform = `translate(${x}px, ${y}px)`
-				blob.style.transition = "transform 1.4s ease-out"
-			})
+      {/* Radial vignette — keeps edges dark */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,211,238,0.03),transparent)]" />
+    </div>
+  );
+};
 
-			requestId = requestAnimationFrame(handleScroll)
-		}
-
-		window.addEventListener("scroll", handleScroll)
-		return () => {
-			window.removeEventListener("scroll", handleScroll)
-			cancelAnimationFrame(requestId)
-		}
-	}, [])
-
-	return (
-		<div className="fixed inset-0 ">
-			<div className="absolute inset-0">
-				<div
-					ref={(ref) => (blobRefs.current[0] = ref)}
-					className="absolute top-0 -left-4 md:w-96 md:h-96 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 "></div>
-				<div
-					ref={(ref) => (blobRefs.current[1] = ref)}
-					className="absolute top-0 -right-4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 hidden sm:block"></div>
-				<div
-					ref={(ref) => (blobRefs.current[2] = ref)}
-					className="absolute -bottom-8 left-[-40%] md:left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-40 md:opacity-20 "></div>
-					<div
-					ref={(ref) => (blobRefs.current[3] = ref)}
-					className="absolute -bottom-10 right-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-20 md:opacity-10 hidden sm:block"></div>
-			</div>
-			<div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f10_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f10_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-		</div>
-	)
-}
-
-export default AnimatedBackground
-
+export default AnimatedBackground;

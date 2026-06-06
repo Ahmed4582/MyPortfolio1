@@ -1,277 +1,213 @@
-import { useState, useEffect, useCallback, memo } from "react"
-import PropTypes from 'prop-types'
-import {  Linkedin, Mail, ExternalLink,  Sparkles  } from "lucide-react"
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { Facebook, Telegram, WhatsApp } from "@mui/icons-material"
+import { useState, useEffect, useCallback, memo } from "react";
+import PropTypes from "prop-types";
+import { ExternalLink, Mail, Github } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { Linkedin } from "lucide-react";
+import { Telegram, WhatsApp } from "@mui/icons-material";
 
-// Memoized Components
-const StatusBadge = memo(() => (
-  <div className="inline-block animate-float lg:mx-0" data-aos="zoom-in" data-aos-delay="400">
-    <div className="relative group">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-      <div className="relative px-3 sm:px-4 py-2 rounded-full bg-black/40 backdrop-blur-xl border border-white/10">
-        <span className="bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-transparent bg-clip-text sm:text-sm text-[0.7rem] font-medium flex items-center">
-          <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-blue-400" />
-          Ready to Innovate
-        </span>
-      </div>
-    </div>
-  </div>
-));
-StatusBadge.displayName = 'StatusBadge';
+const TYPING_SPEED   = 90;
+const ERASING_SPEED  = 45;
+const PAUSE_DURATION = 2200;
+const WORDS          = ["Frontend Developer", "React Specialist", "Next.js Engineer"];
+const TECH_STACK     = ["React", "Next.js", "TypeScript", "Tailwind CSS"];
 
-const MainTitle = memo(() => (
-  <div className="space-y-2" data-aos="fade-up" data-aos-delay="600">
-    <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-7xl font-bold tracking-tight">
-      <span className="relative inline-block">
-        <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Frontend
-        </span>
-      </span>
-      <br />
-      <span className="relative inline-block mt-2">
-        <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
-        <span className="relative bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
-          Developer
-        </span>
-      </span>
-    </h1>
-  </div>
-));
-MainTitle.displayName = 'MainTitle';
-
-const TechStack = memo(({ tech }) => (
-  <div className="px-4 py-2 hidden sm:block rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-sm text-gray-300 hover:bg-white/10 transition-colors">
-    {tech}
-  </div>
-));
-TechStack.displayName = 'TechStack';
-TechStack.propTypes = {
-  tech: PropTypes.string.isRequired,
-};
-
-const CTAButton = memo(({ href, text, icon: Icon }) => (
-  <a href={href}>
-    <button className="group relative w-[160px]">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4f52c9] to-[#8644c5] rounded-xl opacity-50 blur-md group-hover:opacity-90 transition-all duration-700"></div>
-      <div className="relative h-11 bg-[#030014] backdrop-blur-xl rounded-lg border border-white/10 leading-none overflow-hidden">
-        <div className="absolute inset-0 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 bg-gradient-to-r from-[#4f52c9]/20 to-[#8644c5]/20"></div>
-        <span className="absolute inset-0 flex items-center justify-center gap-2 text-sm group-hover:gap-3 transition-all duration-300">
-          <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent font-medium z-10">
-            {text}
-          </span>
-          <Icon className={`w-4 h-4 text-gray-200 ${text === 'Contact' ? 'group-hover:translate-x-1' : 'group-hover:rotate-45'} transform transition-all duration-300 z-10`} />
-        </span>
-      </div>
-    </button>
-  </a>
-));
-CTAButton.displayName = 'CTAButton';
-CTAButton.propTypes = {
-  href: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  icon: PropTypes.elementType.isRequired,
-};
-
-const SocialLink = memo(({ icon: Icon, link }) => (
-  <a href={link} target="_blank" rel="noopener noreferrer">
-    <button className="group relative p-3">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#6366f1] to-[#a855f7] rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-      <div className="relative rounded-xl bg-black/50 backdrop-blur-xl p-2 flex items-center justify-center border border-white/10 group-hover:border-white/20 transition-all duration-300">
-        <Icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-      </div>
-    </button>
-  </a>
-));
-SocialLink.displayName = 'SocialLink';
-SocialLink.propTypes = {
-  icon: PropTypes.elementType.isRequired,
-  link: PropTypes.string.isRequired,
-};
-
-// Constants
-const TYPING_SPEED = 100;
-const ERASING_SPEED = 50;
-const PAUSE_DURATION = 2000;
-const WORDS = ["Computer Science & Math Student", "Tech Enthusiast"];
-const TECH_STACK = ["React", "Javascript", "Next.js", "Typescript" ];
 const SOCIAL_LINKS = [
-  { icon: Telegram, link: "https://t.me/Ahmedx_N" },
-  { icon: Linkedin, link: "https://www.linkedin.com/in/ahmed-naser-924253392/" },
-  { icon: Facebook, link: "https://www.facebook.com/ahmed.naser.635015/" },
-  {icon: WhatsApp , link: "https://wa.me/+20114239918"}
+  { icon: Github,    link: "https://github.com/Ahmed4582",                               label: "GitHub" },
+  { icon: Linkedin,  link: "https://www.linkedin.com/in/ahmed-naser-95562140b",           label: "LinkedIn" },
+  { icon: Telegram,  link: "https://t.me/Ahmedx_N",                                     label: "Telegram" },
+  { icon: WhatsApp,  link: "https://wa.me/+20114239918",                                  label: "WhatsApp" },
 ];
 
+/* ── Sub-components ── */
+
+const SocialLink = memo(({ icon: Icon, link, label }) => (
+  <a
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    className="group flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all duration-200 hover:border-cyan-500/40 hover:bg-cyan-500/10 hover:text-cyan-400"
+  >
+    <Icon className="h-4 w-4" />
+  </a>
+));
+SocialLink.displayName = "SocialLink";
+SocialLink.propTypes = { icon: PropTypes.elementType.isRequired, link: PropTypes.string.isRequired, label: PropTypes.string.isRequired };
+
+/* ── Main component ── */
+
 const Home = () => {
-  const [text, setText] = useState("")
-  const [isTyping, setIsTyping] = useState(true)
-  const [wordIndex, setWordIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
-
-  // Optimize AOS initialization
-  useEffect(() => {
-    const initAOS = () => {
-      AOS.init({
-        once: true,
-        offset: 10,
-       
-      });
-    };
-
-    initAOS();
-    window.addEventListener('resize', initAOS);
-    return () => window.removeEventListener('resize', initAOS);
-  }, []);
+  const [text,       setText]       = useState("");
+  const [isTyping,   setIsTyping]   = useState(true);
+  const [wordIndex,  setWordIndex]  = useState(0);
+  const [charIndex,  setCharIndex]  = useState(0);
+  const [isLoaded,   setIsLoaded]   = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    AOS.init({ once: true, offset: 10, duration: shouldReduceMotion ? 0 : 700 });
     setIsLoaded(true);
+    if (shouldReduceMotion) setText(WORDS[0]);
     return () => setIsLoaded(false);
-  }, []);
+  }, [shouldReduceMotion]);
 
-  // Optimize typing effect
   const handleTyping = useCallback(() => {
     if (isTyping) {
       if (charIndex < WORDS[wordIndex].length) {
-        setText(prev => prev + WORDS[wordIndex][charIndex]);
-        setCharIndex(prev => prev + 1);
+        setText((p) => p + WORDS[wordIndex][charIndex]);
+        setCharIndex((p) => p + 1);
       } else {
         setTimeout(() => setIsTyping(false), PAUSE_DURATION);
       }
     } else {
       if (charIndex > 0) {
-        setText(prev => prev.slice(0, -1));
-        setCharIndex(prev => prev - 1);
+        setText((p) => p.slice(0, -1));
+        setCharIndex((p) => p - 1);
       } else {
-        setWordIndex(prev => (prev + 1) % WORDS.length);
+        setWordIndex((p) => (p + 1) % WORDS.length);
         setIsTyping(true);
       }
     }
   }, [charIndex, isTyping, wordIndex]);
 
   useEffect(() => {
-    const timeout = setTimeout(
-      handleTyping,
-      isTyping ? TYPING_SPEED : ERASING_SPEED
-    );
-    return () => clearTimeout(timeout);
-  }, [handleTyping, isTyping]);
+    if (shouldReduceMotion) return undefined;
+    const id = setTimeout(handleTyping, isTyping ? TYPING_SPEED : ERASING_SPEED);
+    return () => clearTimeout(id);
+  }, [handleTyping, isTyping, shouldReduceMotion]);
 
   return (
-    <div className="min-h-screen bg-[#030014] overflow-hidden px-[5%] sm:px-[5%] lg:px-[10%] " id="Home">
-      <div className={`relative z-10 transition-all duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
-        <div className="container mx-auto  min-h-screen ">
-          <div className="flex flex-col lg:flex-row items-center justify-center h-screen md:justify-between gap-0 sm:gap-12 lg:gap-20">
-            {/* Left Column */}
-            <div className="w-full lg:w-1/2 space-y-6 sm:space-y-8 text-left lg:text-left order-1 lg:order-1 lg:mt-0"
-              data-aos="fade-right"
-              data-aos-delay="200">
-              <div className="space-y-4 sm:space-y-6">
-                <StatusBadge />
-                <MainTitle />
+    <section
+      id="Home"
+      className={`relative min-h-screen bg-[#060913] px-[5%] lg:px-[10%] transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+    >
+      <div className="mx-auto flex min-h-screen flex-col items-center justify-center lg:flex-row lg:justify-between gap-12 pt-16">
 
-                {/* Typing Effect */}
-                <div className="h-8 flex items-center" data-aos="fade-up" data-aos-delay="800">
-                  <span className="text-xl md:text-2xl bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent font-light">
-                    {text}
-                  </span>
-                  <span className="w-[3px] h-6 bg-gradient-to-t from-[#6366f1] to-[#a855f7] ml-1 animate-blink"></span>
-                </div>
+        {/* ── LEFT ── */}
+        <div className="w-full space-y-7 lg:w-[55%]" data-aos="fade-right" data-aos-delay="100">
 
-                {/* Description */}
-                <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
-                  data-aos="fade-up"
-                  data-aos-delay="1000">
-                  Creating Innovative, Functional, and User-Friendly Websites for Digital Solutions.
-                </p>
+          {/* Status badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm text-cyan-400">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+            Available for work
+          </div>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-3 justify-start" data-aos="fade-up" data-aos-delay="1200">
-                  {TECH_STACK.map((tech, index) => (
-                    <TechStack key={index} tech={tech} />
-                  ))}
-                </div>
+          {/* Name */}
+          <div className="space-y-1">
+            <p className="text-base font-medium text-slate-400 tracking-wide">Hi, I&apos;m</p>
+            <h1 className="text-5xl font-extrabold leading-tight text-white sm:text-6xl lg:text-7xl">
+              Ahmed{" "}
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                Naser
+              </span>
+            </h1>
+          </div>
 
-                {/* CTA Buttons */}
-                <div className="flex flex-row gap-3 w-full justify-start" data-aos="fade-up" data-aos-delay="1400">
-                  <CTAButton href="#Portofolio" text="Projects" icon={ExternalLink} />
-                  <CTAButton href="#Contact" text="Contact" icon={Mail} />
-                </div>
+          {/* Typing effect */}
+          <div className="flex h-8 items-center gap-1" data-aos="fade-up" data-aos-delay="300">
+            <span className="text-xl font-light text-slate-300 sm:text-2xl">{text}</span>
+            {!shouldReduceMotion && (
+              <span className="ml-0.5 inline-block h-6 w-[2px] bg-gradient-to-b from-cyan-400 to-blue-500 animate-blink rounded-full" />
+            )}
+          </div>
 
-                {/* Social Links */}
-                <div className="hidden sm:flex gap-4 justify-start" data-aos="fade-up" data-aos-delay="1600">
-                  {SOCIAL_LINKS.map((social, index) => (
-                    <SocialLink key={index} {...social} />
-                  ))}
-                </div>
+          {/* Description */}
+          <p className="max-w-lg text-base leading-relaxed text-slate-400" data-aos="fade-up" data-aos-delay="400">
+            Building fast, accessible, and visually polished web experiences. I
+            combine clean code with thoughtful UX to deliver interfaces that work
+            great on every device.
+          </p>
+
+          {/* Tech chips */}
+          <div className="flex flex-wrap gap-2" data-aos="fade-up" data-aos-delay="500">
+            {TECH_STACK.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300 backdrop-blur-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA buttons */}
+          <div className="flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="600">
+            <a
+              href="#Portofolio"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all duration-200 hover:opacity-90 hover:shadow-cyan-500/30"
+            >
+              View Projects
+              <ExternalLink className="h-4 w-4" />
+            </a>
+            <a
+              href="#Contact"
+              className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/5 px-6 py-3 text-sm font-semibold text-cyan-400 transition-all duration-200 hover:bg-cyan-500/15"
+            >
+              Contact Me
+              <Mail className="h-4 w-4" />
+            </a>
+          </div>
+
+          {/* Social links */}
+          <div className="flex gap-3" data-aos="fade-up" data-aos-delay="700">
+            {SOCIAL_LINKS.map((s) => (
+              <SocialLink key={s.label} {...s} />
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT — Photo ── */}
+        <div
+          className="relative flex w-full items-center justify-center lg:w-[40%]"
+          data-aos="fade-left"
+          data-aos-delay="200"
+        >
+          {/* Glow behind photo */}
+          <div className="absolute inset-0 mx-auto h-[360px] w-[300px] rounded-3xl bg-gradient-to-br from-cyan-500/15 to-blue-600/15 blur-3xl" />
+
+          {/* Photo card */}
+          <div className="relative animate-glow overflow-hidden rounded-3xl border border-cyan-500/20 shadow-[0_0_60px_rgba(34,211,238,0.1)]">
+            <img
+              src="/Photo.jpg"
+              alt="Ahmed Naser Metwally"
+              className="h-[400px] w-[300px] object-cover object-top sm:h-[440px] sm:w-[330px]"
+            />
+            {/* Bottom gradient fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#060913]/80 to-transparent" />
+
+            {/* Name tag bottom */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400">Frontend Dev</p>
+                <p className="text-sm font-bold text-white">Ahmed Naser</p>
               </div>
+              <span className="flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-1 text-xs font-medium text-emerald-400 border border-emerald-500/30">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Open
+              </span>
             </div>
+          </div>
 
-            {/* Right Column — Creative AI Robot */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center order-2 lg:order-2 mt-8 lg:mt-0 py-[10%] sm:py-0"
-              data-aos="fade-left"
-              data-aos-delay="600">
-              <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
+          {/* Floating badge — top right */}
+          <div className="absolute -right-2 top-8 rounded-xl border border-cyan-500/30 bg-[#0A1020]/90 px-3 py-2 text-xs font-mono text-cyan-300 backdrop-blur-md sm:-right-6">
+            ⚛ React & Next.js
+          </div>
 
-                {/* Circuit-board dot grid */}
-                <div className="absolute inset-0 rounded-3xl opacity-20"
-                  style={{ backgroundImage: 'radial-gradient(circle, #6366f1 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-
-                {/* Neon border rings */}
-                <div className="absolute inset-0 rounded-3xl border border-purple-500/30 animate-pulse" />
-                <div className="absolute -inset-[2px] rounded-3xl border border-indigo-500/20 animate-[pulse_3s_ease-in-out_infinite]" />
-
-                {/* Rotating orbit ring */}
-                <div className="absolute inset-[-18px] rounded-full border border-dashed border-purple-500/25 animate-[spin_14s_linear_infinite]" />
-
-                {/* Glow blob behind robot */}
-                <div className="absolute inset-8 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-[pulse_4s_ease-in-out_infinite]" />
-
-                {/* Scan line sweep */}
-                <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-                  <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent animate-[scanline_3s_ease-in-out_infinite]" />
-                </div>
-
-                {/* Robot Image */}
-                <div className="relative z-10 w-full h-full flex items-center justify-center"
-                  onMouseEnter={() => setIsHovering(true)}
-                  onMouseLeave={() => setIsHovering(false)}>
-                  <img
-                    src="/Service-robots-1.jpg"
-                    alt="AI Robot"
-                    className={`w-[80%] h-[80%] object-contain transition-transform duration-500 drop-shadow-[0_0_24px_rgba(139,92,246,0.5)] ${isHovering ? "scale-110" : "scale-100"}`}
-                  />
-                </div>
-
-                {/* Floating tech badges */}
-                <div className="absolute top-3 -left-4 px-3 py-1 rounded-full bg-black/70 border border-purple-500/40 text-purple-300 text-xs font-mono backdrop-blur-sm animate-[float_3s_ease-in-out_infinite]">
-                  ⚛ React
-                </div>
-                <div className="absolute top-3 -right-4 px-3 py-1 rounded-full bg-black/70 border border-indigo-400/40 text-indigo-300 text-xs font-mono backdrop-blur-sm animate-[float_3.5s_ease-in-out_0.5s_infinite]">
-                  🤖 AI
-                </div>
-                <div className="absolute bottom-14 -left-4 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-gray-300 text-xs font-mono backdrop-blur-sm animate-[float_4s_ease-in-out_1s_infinite]">
-                  ▲ Next.js
-                </div>
-                <div className="absolute bottom-14 -right-4 px-3 py-1 rounded-full bg-black/70 border border-yellow-500/30 text-yellow-300 text-xs font-mono backdrop-blur-sm animate-[float_3.2s_ease-in-out_0.8s_infinite]">
-                  JS ⚡
-                </div>
-
-                {/* AI coding label */}
-                <div className="absolute -bottom-8 left-0 right-0 flex justify-center">
-                  <span className="text-purple-400/60 text-xs font-mono tracking-widest animate-pulse">
-                    {"< AI is coding />"}
-                  </span>
-                </div>
-              </div>
-            </div>
+          {/* Floating badge — bottom left */}
+          <div className="absolute -left-2 bottom-16 rounded-xl border border-blue-500/30 bg-[#0A1020]/90 px-3 py-2 text-xs font-mono text-blue-300 backdrop-blur-md sm:-left-6">
+            16+ Projects
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 lg:flex">
+        <span className="text-xs text-slate-500">Scroll</span>
+        <div className="h-8 w-px bg-gradient-to-b from-slate-500/50 to-transparent" />
+      </div>
+    </section>
   );
 };
 

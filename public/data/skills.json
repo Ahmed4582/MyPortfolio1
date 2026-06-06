@@ -1,0 +1,15 @@
+[
+  { "name": "React", "tier": "Expert", "tooltip": "Hooks, context, performance" },
+  { "name": "JavaScript", "tier": "Expert", "tooltip": "ES2022+, async, closures" },
+  { "name": "HTML & CSS", "tier": "Expert", "tooltip": "Semantic accessible markup" },
+  { "name": "Tailwind CSS", "tier": "Expert", "tooltip": "Utility-first design systems" },
+  { "name": "TypeScript", "tier": "Proficient", "tooltip": "Strict types and utilities" },
+  { "name": "Next.js", "tier": "Proficient", "tooltip": "Routing, SSR, app patterns" },
+  { "name": "Framer Motion", "tier": "Proficient", "tooltip": "Variants, gestures, transitions" },
+  { "name": "Redux", "tier": "Proficient", "tooltip": "Toolkit and async state" },
+  { "name": "Vite", "tier": "Proficient", "tooltip": "Fast builds and HMR" },
+  { "name": "Firebase", "tier": "Familiar", "tooltip": "Auth, Firestore, hosting" },
+  { "name": "Supabase", "tier": "Familiar", "tooltip": "Postgres and storage" },
+  { "name": "Node.js", "tier": "Familiar", "tooltip": "Express and REST APIs" },
+  { "name": "GraphQL", "tier": "Familiar", "tooltip": "Queries and mutations" }
+]
