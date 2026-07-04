@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Award, Boxes, Code, ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { Award, Boxes, Code, ExternalLink, Github, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import "swiper/css";
@@ -188,7 +188,7 @@ const Portofolio = () => {
     const [featured, ...rest] = sortedProjects;
 
     return (
-      <div className="space-y-5 pb-12">
+      <div className="space-y-6 pb-12">
         {/* Featured — always visible */}
         <FeaturedCard
           project={featured}
@@ -198,39 +198,58 @@ const Portofolio = () => {
 
         {/* Swiper — all screen sizes */}
         <div>
-          <p className="mb-4 text-xs text-slate-500">
+          <p className="mb-4 px-1 text-xs text-slate-500 sm:px-0">
             {rest.length} more projects — swipe or use arrows
           </p>
-          <Swiper
-            modules={[Navigation, Pagination, A11y]}
-            spaceBetween={16}
-            slidesPerView={1.2}
-            navigation
-            pagination={{ clickable: true, dynamicBullets: true }}
-            loop={rest.length > 3}
-            breakpoints={{
-              480:  { slidesPerView: 1.5, spaceBetween: 16 },
-              640:  { slidesPerView: 2,   spaceBetween: 18 },
-              900:  { slidesPerView: 2.5, spaceBetween: 20 },
-              1024: { slidesPerView: 3,   spaceBetween: 20 },
-            }}
-            className="!overflow-visible pb-12"
-            a11y={{ prevSlideMessage: "Previous project", nextSlideMessage: "Next project" }}
-          >
-            {rest.map((project, i) => (
-              <SwiperSlide key={project.id}>
-                <ProjectCard
-                  image={project.image}
-                  title={project.title}
-                  description={project.description}
-                  liveUrl={project.live_url}
-                  githubUrl={project.github_url}
-                  technologies={project.technologies}
-                  onClick={() => setModalIndex(i + 1)}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div className="relative">
+            <button
+              type="button"
+              aria-label="Previous project"
+              className="portfolio-swiper-prev custom-swiper-arrow swiper-button-prev"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" strokeWidth={1.8} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next project"
+              className="portfolio-swiper-next custom-swiper-arrow swiper-button-next"
+            >
+              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+            </button>
+            <Swiper
+              modules={[Navigation, Pagination, A11y]}
+              spaceBetween={16}
+              slidesPerView={1.05}
+              navigation={{
+                prevEl: ".portfolio-swiper-prev",
+                nextEl: ".portfolio-swiper-next",
+              }}
+              pagination={{ clickable: true, dynamicBullets: true }}
+              loop={rest.length > 3}
+              breakpoints={{
+                480:  { slidesPerView: 1.15, spaceBetween: 18 },
+                640:  { slidesPerView: 2,    spaceBetween: 22 },
+                900:  { slidesPerView: 2.4,  spaceBetween: 24 },
+                1180: { slidesPerView: 3,    spaceBetween: 24 },
+              }}
+              className="portfolio-swiper pb-12"
+              a11y={{ prevSlideMessage: "Previous project", nextSlideMessage: "Next project" }}
+            >
+              {rest.map((project, i) => (
+                <SwiperSlide key={project.id}>
+                  <ProjectCard
+                    image={project.image}
+                    title={project.title}
+                    description={project.description}
+                    liveUrl={project.live_url}
+                    githubUrl={project.github_url}
+                    technologies={project.technologies}
+                    onClick={() => setModalIndex(i + 1)}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
     );
@@ -253,58 +272,60 @@ const Portofolio = () => {
       className="w-full overflow-hidden bg-[#060913] px-[5%] pt-14 sm:mt-0 lg:px-[10%]"
       id="Portofolio"
     >
-      {/* Header */}
-      <div className="pb-10 text-center" data-aos="fade-up" data-aos-duration="800">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">
-          My Work
-        </p>
-        <h2 className="mx-auto inline-block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-center text-3xl font-bold text-transparent md:text-5xl">
-          Portfolio Showcase
-        </h2>
-        <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-400 md:text-base">
-          Explore my journey through projects, certifications, and technical expertise.
-        </p>
-      </div>
-
-      {/* Tabs */}
-      <div className="mb-8 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-2 backdrop-blur">
-        <div className="grid grid-cols-3 gap-2">
-          {tabs.map((tab) => {
-            const Icon     = tab.icon;
-            const selected = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-sm font-semibold transition-all duration-200 md:flex-row md:gap-2 md:text-base ${
-                  selected
-                    ? "bg-cyan-500/15 text-cyan-400 shadow-lg shadow-cyan-500/10 border border-cyan-500/20"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
-                }`}
-                aria-pressed={selected}
-              >
-                <Icon className="h-5 w-5" />
-                {tab.label}
-              </button>
-            );
-          })}
+      <div>
+        {/* Header */}
+        <div className="pb-10 text-center" data-aos="fade-up" data-aos-duration="800">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">
+            My Work
+          </p>
+          <h2 className="mx-auto inline-block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-center text-3xl font-bold text-transparent md:text-5xl">
+            Portfolio Showcase
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-slate-400 md:text-base">
+            Explore my journey through projects, certifications, and technical expertise.
+          </p>
         </div>
-      </div>
 
-      {/* Tab content */}
-      <motion.div
-        key={activeTab}
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.22 }}
-      >
-        {activeTab === "projects"     && renderProjects()}
-        {activeTab === "certificates" && (
-          <CertificatesCarousel certificates={certificates} loading={certificatesLoading} />
-        )}
-        {activeTab === "tech"         && renderTechStack()}
-      </motion.div>
+        {/* Tabs */}
+        <div className="mb-8 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-2 backdrop-blur">
+          <div className="grid grid-cols-3 gap-2">
+            {tabs.map((tab) => {
+              const Icon     = tab.icon;
+              const selected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-sm font-semibold transition-all duration-200 md:flex-row md:gap-2 md:text-base ${
+                    selected
+                      ? "bg-cyan-500/15 text-cyan-400 shadow-lg shadow-cyan-500/10 border border-cyan-500/20"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  }`}
+                  aria-pressed={selected}
+                >
+                  <Icon className="h-5 w-5" />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tab content */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22 }}
+        >
+          {activeTab === "projects"     && renderProjects()}
+          {activeTab === "certificates" && (
+            <CertificatesCarousel certificates={certificates} loading={certificatesLoading} />
+          )}
+          {activeTab === "tech"         && renderTechStack()}
+        </motion.div>
+      </div>
 
       {/* Modal */}
       {modalIndex !== null && (

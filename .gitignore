@@ -8,10 +8,20 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+node_modules/
 *.local
 # Ignore dist folder
 dist/
+.vite/
 *.dist
+
+.claude/
+.specify/
+specs/
+spec.md
+plan.md
+data-model.md
+tasks.md
 
 # Editor directories and files
 .vscode/*

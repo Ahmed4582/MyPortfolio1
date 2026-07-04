@@ -108,24 +108,86 @@ body {
 /* ── Swiper custom theme ── */
 .swiper-button-next,
 .swiper-button-prev {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   color: #22d3ee !important;
-  background: rgba(6, 9, 19, 0.8);
-  border: 1px solid rgba(34, 211, 238, 0.25);
+  background: rgba(2, 6, 23, 0.62);
+  border: 1px solid rgba(34, 211, 238, 0.3);
   border-radius: 50%;
-  width: 40px !important;
-  height: 40px !important;
-  backdrop-filter: blur(8px);
-  transition: all 0.2s ease;
+  width: 42px !important;
+  height: 42px !important;
+  margin-top: -21px !important;
+  opacity: 0.8;
+  z-index: 20;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+.portfolio-swiper .swiper-button-prev {
+  left: 12px !important;
+}
+.portfolio-swiper .swiper-button-next {
+  right: 12px !important;
+}
+.custom-swiper-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  width: 42px !important;
+  height: 42px !important;
+  margin-top: -21px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9999px;
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  color: #22d3ee;
+  backdrop-filter: blur(12px);
+}
+.portfolio-swiper-prev {
+  left: 12px !important;
+}
+.portfolio-swiper-next {
+  right: 12px !important;
+}
+.custom-swiper-arrow svg {
+  width: 14px !important;
+  height: 14px !important;
+  stroke-width: 1.8 !important;
+}
+.custom-swiper-arrow::after {
+  display: none !important;
+  content: none !important;
 }
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 14px !important;
-  font-weight: 900;
+  display: block;
+  font-size: 13px !important;
+  font-weight: normal;
+  line-height: 1;
+  transform: none;
 }
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background: rgba(34, 211, 238, 0.15);
-  border-color: rgba(34, 211, 238, 0.5);
+  color: #67e8f9 !important;
+  background: rgba(34, 211, 238, 0.18);
+  border-color: rgba(103, 232, 249, 0.7);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  opacity: 0.25 !important;
+  cursor: default;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .portfolio-swiper .swiper-button-next,
+  .portfolio-swiper .swiper-button-prev,
+  .custom-swiper-arrow {
+    display: none !important;
+  }
 }
 .swiper-pagination-bullet {
   background: rgba(34, 211, 238, 0.3) !important;

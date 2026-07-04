@@ -1,5 +1,15 @@
 [
   {
+    "id": 17,
+    "title": "SeaZone",
+    "description": "SeaZone is a modern logistics and international shipping platform designed to simplify shipping from China to the Arab region. The platform provides users with a smooth digital experience for shipment tracking, air and sea freight services, customs HS code checking, shipment booking, instant updates, and a dedicated dashboard for managing shipments, tracking updates, customer requests, and logistics workflow control.",
+    "image": "https://www.image2url.com/r2/default/images/1783170835536-987837be-79b9-475e-af77-924948bd9103.png",
+    "live_url": "https://www.seazone.org/",
+    "github_url": null,
+    "technologies": ["React", "Tailwind CSS", "API Integration", "Dashboard", "Responsive Design"],
+    "case_study": "SeaZone was built as a professional digital logistics platform that connects customers with reliable shipping services from China. The system focuses on improving the full shipment journey, starting from service discovery and customs classification to shipment booking, real-time tracking, and dashboard-based management. The dashboard helps organize shipments, monitor status updates, manage customer requests, and provide a clearer operational view for logistics workflows."
+  },
+  {
     "id": 16,
     "title": "Event Management Platform with Admin Dashboard",
     "description": "A fully dynamic event management system integrated with a powerful admin dashboard (CMS) that enables real-time control over content, event creation, user registrations, and platform updates without redeployment.",

@@ -24,25 +24,25 @@ const scrollTo = (e, href) => {
 };
 
 const Footer = () => (
-  <footer className="bg-[#060913] border-t border-white/[0.06]">
-    <div className="mx-auto max-w-6xl px-[5%] lg:px-[10%] py-14">
-      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+  <footer className="border-t border-white/[0.06] bg-gradient-to-b from-[#07101f] to-[#060913]">
+    <div className="px-[5%] py-16 lg:px-[10%]">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-12">
 
         {/* Brand */}
-        <div className="space-y-4">
-          <a href="#Home" onClick={(e) => scrollTo(e, "#Home")} className="text-lg font-bold font-mono">
+        <div className="space-y-5">
+          <a href="#Home" onClick={(e) => scrollTo(e, "#Home")} className="inline-flex text-lg font-bold font-mono tracking-tight">
             <span className="text-slate-400">&lt;</span>
             <span className="text-white">Ahmed</span>
             <span className="text-cyan-400">.</span>
             <span className="text-cyan-400">dev</span>
             <span className="text-slate-400"> /&gt;</span>
           </a>
-          <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
+          <p className="max-w-sm text-sm leading-7 text-slate-400">
             Frontend developer building fast, accessible, and visually polished
             web experiences with React and Next.js.
           </p>
           {/* Social row */}
-          <div className="flex gap-2.5 pt-1">
+          <div className="flex flex-wrap gap-3 pt-1">
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -50,7 +50,7 @@ const Footer = () => (
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all duration-200 hover:border-cyan-500/40 hover:bg-cyan-500/10 hover:text-cyan-400"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 backdrop-blur transition-all duration-200 hover:border-cyan-500/40 hover:bg-cyan-500/10 hover:text-cyan-400"
               >
                 <Icon className="h-4 w-4" />
               </a>
@@ -63,7 +63,7 @@ const Footer = () => (
           <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
             Navigation
           </h4>
-          <ul className="space-y-2.5">
+          <ul className="space-y-3">
             {navLinks.map(({ href, label }) => (
               <li key={label}>
                 <a
@@ -83,7 +83,7 @@ const Footer = () => (
           <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
             Contact
           </h4>
-          <ul className="space-y-2.5">
+          <ul className="space-y-3">
             <li>
               <a
                 href="mailto:an2900234@gmail.com"
@@ -117,7 +117,7 @@ const Footer = () => (
       </div>
 
       {/* Bottom bar */}
-      <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-6 sm:flex-row">
+      <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-6 text-center sm:flex-row sm:text-left">
         <p className="text-xs text-slate-500">
           © {new Date().getFullYear()} Ahmed Naser Metwally. All rights reserved.
         </p>
