@@ -1,247 +1,161 @@
-# Portfolio V5
+# Ahmed Naser — React & Next.js Frontend Developer
 
-Hello everyone\! 👋
+This repository contains the personal portfolio of Ahmed Naser, a React & Next.js Frontend Developer based in Sharkia, Egypt. It showcases his frontend skills, practical commercial experience, and selected work across responsive web applications, dashboards, e-commerce platforms, booking systems, and SaaS products.
 
-Let me introduce myself, I'm **Eki Zulfar Rachman**. On this occasion, I'd like to share the portfolio website project that I've developed.
+Ahmed builds modern user interfaces with React.js, Next.js, JavaScript, TypeScript, and related frontend technologies.
 
-## 🚀 Live Demo
+## Live Demo
 
-**Website Link:** [https://www.eki.my.id/](https://www.eki.my.id/)
+View the portfolio at [my-portfolio1-jade.vercel.app](https://my-portfolio1-jade.vercel.app).
 
-## 🛠️ Tech Stack
+## Main Features
 
-This project is built using modern web technologies:
+- Responsive, mobile-friendly design
+- Modern single-page portfolio interface
+- Projects, skills, experience, and certificates sections
+- Smooth section navigation
+- Detailed project views
+- Contact form and social links
+- Reusable React components
 
-  - **ReactJS** - Frontend framework
-  - **Tailwind CSS** - Utility-first CSS framework
-  - **Supabase** - Backend for portfolio data, certificates, and comment system
-  - **AOS** - Animate On Scroll library
-  - **Framer Motion** - Animation library
-  - **Lucide** - Icon library
-  - **Material UI** - React component library
-  - **SweetAlert2** - Beautiful alert dialogs
+## Technology Stack
 
-## 📋 Prerequisites
+### Core Technologies
 
-Before running this project, ensure you have the following installed:
+- HTML5
+- CSS3
+- JavaScript
+- TypeScript
 
-  - **Node.js** (version 14.x or higher)
-  - **npm** or **yarn** package manager
+### Frameworks and Libraries
 
-## 🏃‍♂️ Getting Started
+- React.js
+- Next.js
+- Redux Toolkit
+- React Query
 
-Follow these steps to run the project locally:
+### Styling
 
-### 1\. Clone the Repository
+- Tailwind CSS
+- Sass
+- Bootstrap
+
+### Services and APIs
+
+- REST APIs
+- Firebase
+- Supabase
+
+### Tools
+
+- Git
+- GitHub
+- Figma
+- Vercel
+
+The portfolio application itself is built with React, Vite, Tailwind CSS, React Router, and supporting UI and animation libraries.
+
+## Featured Projects
+
+### Meiskan
+
+A construction marketplace platform connecting project owners with contractors through project posting, bidding, matching, communication, and project-tracking workflows.
+
+**Technologies:** Next.js, React, REST APIs
+
+### POS Dashboard
+
+A multilingual sales and order management dashboard for managing orders, rentals, categories, discounts, packages, and business statistics. It supports Arabic, English, and Turkish interfaces with RTL and LTR layouts.
+
+**Technologies:** Next.js, React, TypeScript, Tailwind CSS, React Query, Recharts, Radix UI
+
+### SeenSoal
+
+A marketing automation SaaS interface for campaign management, bulk messaging, customer interaction, chatbot workflows, and customer-support operations.
+
+**Technologies:** Next.js, React, REST APIs
+
+### Muro Perfume
+
+A responsive luxury perfume e-commerce website focused on product browsing, visual presentation, brand identity, and a smooth shopping experience.
+
+**Technologies:** Next.js, React, Tailwind CSS
+
+## Installation
+
+This project uses npm. Clone the repository and install its dependencies:
 
 ```bash
-git clone https://github.com/EkiZR/Portofolio_V5.git
-cd Portofolio_V5
-```
-
-### 2\. Install Dependencies
-
-```bash
+git clone https://github.com/Ahmed4582/MyPortfolio1.git
+cd MyPortfolio1
 npm install
 ```
 
-If you encounter peer dependency issues, use:
+## Running the Project Locally
 
-```bash
-npm install --legacy-peer-deps
-```
-
-### 3\. Run the Development Server
+Start the Vite development server:
 
 ```bash
 npm run dev
 ```
 
-### 4\. Open in Browser
+Open the local URL displayed in the terminal.
 
-Access the application through the link displayed in your terminal (usually `http://localhost:5173`).
+## Production Build
 
-## 🏗️ Building for Production
+Create an optimized production build:
 
-To create a production-ready build:
-
-1.  Run the build command:
-
-    ```bash
-    npm run build
-    ```
-
-2.  The build files will be saved in the `dist` folder. Upload this folder to your hosting server.
-
-## ⚙️ Configuration (Supabase)
-
-All backend data for this project (portfolio, certificates, and comments) is managed by Supabase.
-
-### 1\. Create Supabase Project
-
-  - Go to [Supabase](https://supabase.com/) and create a new project.
-  - Keep your **Project URL** and **anon public key** handy. You can find them in **Settings \> API**.
-
-### 2\. Setup Database Tables & Policies
-
-Run the following all-in-one SQL script in your Supabase **SQL Editor**. This will set up all necessary tables, security policies, storage, and also insert one example for each table.
-
-```sql
--- ---- TABLE CREATION ----
-
--- Creates the 'projects' table for portfolio items
-CREATE TABLE public.projects (
-  id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-  created_at timestamp with time zone DEFAULT now() NOT NULL,
-  "Title" text,
-  "Description" text,
-  "Img" text,
-  "Link" text,
-  "Github" text,
-  "Features" jsonb,
-  "TechStack" jsonb
-);
-
--- Creates the 'certificates' table
-CREATE TABLE public.certificates (
-  id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
-  created_at timestamp with time zone DEFAULT now() NOT NULL,
-  "Img" text
-);
-
--- Creates the 'portfolio_comments' table for the comment system
-CREATE TABLE public.portfolio_comments (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  content TEXT NOT NULL,
-  user_name VARCHAR(255) NOT NULL,
-  profile_image TEXT,
-  is_pinned BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- ---- ROW LEVEL SECURITY (RLS) SETUP ----
-
--- Enable RLS for all tables
-ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.certificates ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.portfolio_comments ENABLE ROW LEVEL SECURITY;
-
--- ---- POLICY CREATION ----
-
--- Policy for 'projects': Allow public read access
-CREATE POLICY "Public Read Access Policy for Projects"
-ON public.projects FOR SELECT TO public USING (true);
-
--- Policy for 'certificates': Allow public read access
-CREATE POLICY "Public Read Access Policy for Certificates"
-ON public.certificates FOR SELECT TO public USING (true);
-
--- Policies for 'portfolio_comments': Allow read for everyone, and insert for everyone (but not pinned)
-CREATE POLICY "Allow public read on portfolio_comments"
-ON public.portfolio_comments FOR SELECT TO public USING (true);
-
-CREATE POLICY "Allow public insert on portfolio_comments"
-ON public.portfolio_comments FOR INSERT TO public WITH CHECK (is_pinned = false);
-
--- ---- STORAGE SETUP FOR COMMENT PROFILE IMAGES ----
-
--- Create a public bucket for profile images
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('profile-images', 'profile-images', true)
-ON CONFLICT (id) DO NOTHING; -- Avoid errors if the bucket already exists
-
--- Policies for 'profile-images' bucket
-CREATE POLICY "Allow public to upload profile images"
-ON storage.objects FOR INSERT TO public WITH CHECK (bucket_id = 'profile-images');
-
-CREATE POLICY "Allow public to read profile images"
-ON storage.objects FOR SELECT TO public USING (bucket_id = 'profile-images');
-
--- ---- EXAMPLE DATA INSERTION ----
-
--- Insert one example project
-INSERT INTO public.projects ("Title", "Description", "Img", "Link", "Github", "Features", "TechStack") 
-VALUES (
-    'Example Project Title', 
-    'A simple description for this example project, explaining its main purpose and goals.', 
-    'REPLACE_WITH_YOUR_PROJECT_IMAGE_URL.png', 
-    'REPLACE_WITH_YOUR_LIVE_DEMO_URL.com', 
-    'REPLACE_WITH_YOUR_GITHUB_REPO_URL.com', 
-    '["Main Feature A", "Core Function B", "Key Ability C"]', 
-    '["React", "Supabase", "Tailwind CSS"]'
-);
-
--- Insert one example certificate
-INSERT INTO public.certificates ("Img") 
-VALUES ('REPLACE_WITH_YOUR_CERTIFICATE_IMAGE_URL.png');
-
--- Insert one example comment
-INSERT INTO public.portfolio_comments (content, user_name) 
-VALUES ('Created By Eki Zulfar Rachman', 'ekizr');
-
+```bash
+npm run build
 ```
 
-### 3\. Enable Realtime (for Comment System)
+The generated files are written to `dist/`.
 
-  - Go to **Table Editor > portofolio_comments**.
-  - Enable Realtime for the `portfolio_comments`.
+Preview the production build locally:
 
-## 🔧 Environment Variables Setup
-
-Create a file named `.env` in the root of your project and add your Supabase credentials.
-
-```env
-# Supabase Configuration
-VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```bash
+npm run preview
 ```
 
-**Important:**
+## Project Structure
 
-  - All environment variables must be prefixed with `VITE_` for Vite to access them.
-  - Restart your development server after creating or modifying the `.env` file.
-  - **Never** commit your `.env` file to version control. Ensure it's listed in your `.gitignore` file.
-
-### Configuration File (`supabase.js`)
-
-Ensure your Supabase client configuration file (e.g., `src/supabase.js`) uses these environment variables.
-
-```javascript
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error("Supabase URL and Anon Key are required. Check your .env file.")
-}
-
-export const supabase = createClient(supabaseUrl, supabaseKey)
+```text
+MyPortfolio1/
+├── public/
+│   ├── data/
+│   └── images/
+├── src/
+│   ├── Pages/
+│   ├── assets/
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── portfolio/
+│   │   └── ui/
+│   ├── hooks/
+│   ├── lib/
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── vercel.json
+└── vite.config.js
 ```
 
-## 🚨 Troubleshooting
+Portfolio project, skill, and certificate content is stored in `public/data/`. Application pages and reusable interface elements are organized under `src/`.
 
-If you encounter issues while running the project:
+## Deployment
 
-  - Ensure Node.js is correctly installed.
-  - Verify you're in the correct project directory.
-  - Check that all dependencies are installed without errors.
-  - Make sure your Supabase configuration in the `.env` file is correct and the server has been restarted.
-  - Clear your browser cache and try again.
+The portfolio is deployed on Vercel at [my-portfolio1-jade.vercel.app](https://my-portfolio1-jade.vercel.app). The repository's `vercel.json` runs `npm run build`, serves the generated `dist/` directory, and rewrites application routes to `index.html` for client-side routing.
 
-## 📝 Usage & Credits
+## Contact
 
-We would appreciate it if you decide to use this project. Please include proper credit when using it. Thank you\! 🙏
+**Ahmed Naser**
 
-## 📞 Contact
+React & Next.js Frontend Developer, based in Sharkia, Egypt.
 
-If you have any questions or need help with the setup, feel free to reach out\!
-
-**Eki Zulfar Rachman**
-
-  - Website: [https://www.eki.my.id/](https://www.eki.my.id/)
-  - GitHub: [EkiZR](https://github.com/EkiZR)
-
------
-
-⭐ If this project helped you, please consider giving it a star on GitHub\!
+- Email: [ahmed269117@gmail.com](mailto:ahmed269117@gmail.com)
+- Portfolio: [my-portfolio1-jade.vercel.app](https://my-portfolio1-jade.vercel.app)
+- GitHub: [github.com/Ahmed4582](https://github.com/Ahmed4582)
+- LinkedIn: [linkedin.com/in/ahmed-naser-95562140b](https://www.linkedin.com/in/ahmed-naser-95562140b)
